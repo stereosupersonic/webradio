@@ -1,0 +1,89 @@
+ARG RUBY_VERSION=3.1.4
+
+# https://hub.docker.com/_/ruby
+FROM ruby:${RUBY_VERSION}-slim-bullseye
+
+ENV PG_MAJOR 12
+ENV BUNDLER_VERSION 2.4.19
+ENV CONFIGURE_OPTS --disable-install-rdoc
+ENV NODE_MAJOR 18
+ENV YARN_VERSION 1.22.21
+ARG DEBIAN_FRONTEND=noninteractive
+ENV RAILS_ENV="production"
+ENV SECRET_KEY_BASE=c77ac8fa8a7b1d2b039972f1b2d266b1ac9b10890d314ef19595bc6869d73e050ad90aaee07c0d4309ca6028588a561c0bc31162bc9673c8d1dc110ba949759d
+# base packages
+RUN apt-get update -qq \
+  && apt-get -yq dist-upgrade \
+  && apt-get install -yq --no-install-recommends \
+    build-essential \
+    # install ping and ifconfig
+    net-tools \
+    apt-utils \
+    openssl \
+    curl \
+    lsb-release \
+    git \
+    file \
+    openssh-client \
+    tzdata \
+    # needed for adding keys to fetch a apt repo
+    gnupg2 \
+    libxml2-dev
+
+# specific packages postgres
+RUN mkdir -p /etc/apt/keyrings; \
+    # Add Yarn to the sources list
+    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+    echo 'deb http://dl.yarnpkg.com/debian/ stable main' > /etc/apt/sources.list.d/yarn.list && \
+    # Add NodeJS to sources list
+    curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg; \
+    echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" > /etc/apt/sources.list.d/nodesource.list; \
+    # Add PostgreSQL to sources list
+    curl -sSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
+    && echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" $PG_MAJOR > /etc/apt/sources.list.d/pgdg.list
+
+    # Install packages
+RUN apt-get update -qq && \
+    apt-get install -yq --no-install-recommends \
+      # postgres client
+      postgresql-client-$PG_MAJOR \
+      # postgres lib for pg gem
+      libpq-dev \
+      nodejs \
+      yarn
+
+# cleanup apt
+RUN  apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+    truncate -s 0 /var/log/*log
+
+RUN mkdir -p /app
+WORKDIR /app
+
+# bundler >>>
+ENV LANG=C.UTF-8 \
+    BUNDLE_RETRY=3
+RUN gem update --system && \
+    gem install bundler:$BUNDLER_VERSION
+# We copy these files from our current application to the /app container
+RUN  mkdir -p .bundle
+COPY Gemfile* ./
+# $(nproc) runs bundler in parallel with the amount of CPUs processes
+RUN bundle install -j $(nproc)
+# <<<
+
+# yarn >>>
+COPY package.json yarn.lock ./
+RUN yarn install --frozen-lockfile
+# <<<
+
+COPY . ./
+
+# Precompiling assets for production without requiring secret RAILS_MASTER_KEY
+RUN ./bin/rails assets:precompile
+
+ENTRYPOINT ["/app/bin/docker-entrypoint"]
+
+EXPOSE 3000
+
+CMD ["./bin/rails", "server"]
