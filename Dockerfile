@@ -10,7 +10,7 @@ ENV NODE_MAJOR 18
 ENV YARN_VERSION 1.22.21
 ARG DEBIAN_FRONTEND=noninteractive
 ENV RAILS_ENV="production"
-
+ENV SECRET_KEY_BASE=c77ac8fa8a7b1d2b039972f1b2d266b1ac9b10890d314ef19595bc6869d73e050ad90aaee07c0d4309ca6028588a561c0bc31162bc9673c8d1dc110ba949759d
 # base packages
 RUN apt-get update -qq \
   && apt-get -yq dist-upgrade \
@@ -80,7 +80,7 @@ RUN yarn install --frozen-lockfile
 COPY . ./
 
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
-RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
+RUN ./bin/rails assets:precompile
 
 ENTRYPOINT ["/app/bin/docker-entrypoint"]
 
