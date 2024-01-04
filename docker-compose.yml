@@ -9,8 +9,6 @@ x-base: &base
   tty: true
   restart: "${DOCKER_RESTART_POLICY:-unless-stopped}"
   stop_grace_period: "3s"
-  volumes:
-    - ".:/app"
   environment:
     - DATABASE_HOST=postgres
     - DATABASE_PORT=5432
