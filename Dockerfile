@@ -1,75 +1,89 @@
-# syntax = docker/dockerfile:1
+ARG RUBY_VERSION=3.1.4
 
-# Make sure RUBY_VERSION matches the Ruby version in .ruby-version and Gemfile
-ARG RUBY_VERSION=3.1.2
-FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim as base
+# https://hub.docker.com/_/ruby
+FROM ruby:${RUBY_VERSION}-slim-bullseye
 
-# Rails app lives here
-WORKDIR /rails
+ENV PG_MAJOR 12
+ENV BUNDLER_VERSION 2.4.19
+ENV CONFIGURE_OPTS --disable-install-rdoc
+ENV NODE_MAJOR 18
+ENV YARN_VERSION 1.22.21
+ARG DEBIAN_FRONTEND=noninteractive
+ENV RAILS_ENV="production"
 
-# Set production environment
-ENV RAILS_ENV="production" \
-    BUNDLE_DEPLOYMENT="1" \
-    BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development"
+# base packages
+RUN apt-get update -qq \
+  && apt-get -yq dist-upgrade \
+  && apt-get install -yq --no-install-recommends \
+    build-essential \
+    # install ping and ifconfig
+    net-tools \
+    apt-utils \
+    openssl \
+    curl \
+    lsb-release \
+    git \
+    file \
+    openssh-client \
+    tzdata \
+    # needed for adding keys to fetch a apt repo
+    gnupg2 \
+    libxml2-dev
 
+# specific packages postgres
+RUN mkdir -p /etc/apt/keyrings; \
+    # Add Yarn to the sources list
+    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+    echo 'deb http://dl.yarnpkg.com/debian/ stable main' > /etc/apt/sources.list.d/yarn.list && \
+    # Add NodeJS to sources list
+    curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg; \
+    echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" > /etc/apt/sources.list.d/nodesource.list; \
+    # Add PostgreSQL to sources list
+    curl -sSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
+    && echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" $PG_MAJOR > /etc/apt/sources.list.d/pgdg.list
 
-# Throw-away build stage to reduce size of final image
-FROM base as build
-
-# Install packages needed to build gems and node modules
+    # Install packages
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential curl git libvips node-gyp pkg-config python-is-python3
+    apt-get install -yq --no-install-recommends \
+      # postgres client
+      postgresql-client-$PG_MAJOR \
+      # postgres lib for pg gem
+      libpq-dev \
+      nodejs \
+      yarn
 
-# Install JavaScript dependencies
-ARG NODE_VERSION=18.19.0
-ARG YARN_VERSION=1.22.21
-ENV PATH=/usr/local/node/bin:$PATH
-RUN curl -sL https://github.com/nodenv/node-build/archive/master.tar.gz | tar xz -C /tmp/ && \
-    /tmp/node-build-master/bin/node-build "${NODE_VERSION}" /usr/local/node && \
-    npm install -g yarn@$YARN_VERSION && \
-    rm -rf /tmp/node-build-master
+# cleanup apt
+RUN  apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+    truncate -s 0 /var/log/*log
 
-# Install application gems
-COPY Gemfile Gemfile.lock ./
-RUN bundle install && \
-    rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
-    bundle exec bootsnap precompile --gemfile
+RUN mkdir -p /app
+WORKDIR /app
 
-# Install node modules
+# bundler >>>
+ENV LANG=C.UTF-8 \
+    BUNDLE_RETRY=3
+RUN gem update --system && \
+    gem install bundler:$BUNDLER_VERSION
+# We copy these files from our current application to the /app container
+RUN  mkdir -p .bundle
+COPY Gemfile* ./
+# $(nproc) runs bundler in parallel with the amount of CPUs processes
+RUN bundle install -j $(nproc)
+# <<<
+
+# yarn >>>
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
+# <<<
 
-# Copy application code
-COPY . .
-
-# Precompile bootsnap code for faster boot times
-RUN bundle exec bootsnap precompile app/ lib/
+COPY . ./
 
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 
+ENTRYPOINT ["/app/bin/docker-entrypoint"]
 
-# Final stage for app image
-FROM base
-
-# Install packages needed for deployment
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libsqlite3-0 libvips && \
-    rm -rf /var/lib/apt/lists /var/cache/apt/archives
-
-# Copy built artifacts: gems, application
-COPY --from=build /usr/local/bundle /usr/local/bundle
-COPY --from=build /rails /rails
-
-# Run and own only the runtime files as a non-root user for security
-RUN useradd rails --create-home --shell /bin/bash && \
-    chown -R rails:rails db log storage tmp
-USER rails:rails
-
-# Entrypoint prepares the database.
-ENTRYPOINT ["/rails/bin/docker-entrypoint"]
-
-# Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
+
 CMD ["./bin/rails", "server"]
