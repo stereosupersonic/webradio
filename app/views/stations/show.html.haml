@@ -1,0 +1,7 @@
+%h1= @station.name
+
+.mt-3
+  %audio{ controls: "controls", autoplay: "autoplay", src: @station.url }
+
+.mt-3
+  = link_to "Back", root_path, class: "btn btn-primary btn-lg", data: {turbo: false}

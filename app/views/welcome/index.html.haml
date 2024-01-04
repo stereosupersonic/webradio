@@ -1,0 +1,13 @@
+.row.card-deck
+  - @stations.each do |station|
+    %div{ id: dom_id(station), class: "col-4 m-4 d-flex align-items-stretch" }
+      .card.mt-1{ style: "width: 30rem;"}
+        .card-header=station.name
+        .card-body
+          %h6.card-title= station.name
+          .card-text.mt-1
+            TODO: here comes the PRs infos
+            pictures and so on
+        .card-footer
+          .d-grid.gap-2
+            = link_to "Start", station, class: "btn btn-success btn-lg"

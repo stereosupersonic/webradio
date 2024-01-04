@@ -1,0 +1,27 @@
+!!!
+%html
+  %head
+    %meta{ name: "viewport", content: "width=device-width,initial-scale=1" }
+    %title WebRadio
+
+    = csrf_meta_tags
+    = csp_meta_tag
+
+    = stylesheet_link_tag "application", "data-turbo-track": "reload"
+    = javascript_include_tag "application", "data-turbo-track": "reload", defer: true
+
+  %body{class: "#{controller_name} #{action_name}"}
+    %ul.nav.navbar-light.bg-light
+      %a.navbar-brand{href: root_path} Webradio
+      -# %li.nav-item
+      -#   %a.nav-link{:href => "/stations"} Stations
+    .container
+      .row
+        - flash.each do |name, msg|
+          - if msg.is_a?(String)
+            %div{class: "alert alert-#{name == :notice ? "success" : "error"}"}
+              %a.close{"data-dismiss" => "alert"} ×
+              = content_tag :div, msg, id: "flash_#{name}"
+      .row
+        .col
+          = yield

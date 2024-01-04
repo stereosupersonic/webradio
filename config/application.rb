@@ -26,7 +26,7 @@ module Webradio
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
-    config.autoload_lib(ignore: %w(assets tasks))
+    config.autoload_lib(ignore: %w[assets tasks])
 
     # Configuration for the application, engines, and railties goes here.
     #
@@ -37,6 +37,22 @@ module Webradio
     # config.eager_load_paths << Rails.root.join("extras")
 
     # Don't generate system test files.
-    config.generators.system_tests = nil
+    config.time_zone = "Berlin"
+
+    # config.i18n.default_locale = :de
+
+    config.generators do |g|
+      g.assets = false
+      g.helper = false
+      g.system_tests = nil
+      g.template_engine :haml
+      g.test_framework :rspec,
+        fixtures: true,
+        view_specs: false,
+        helper_specs: false,
+        routing_specs: false,
+        controller_specs: false,
+        request_specs: false
+    end
   end
 end
