@@ -80,7 +80,7 @@ RUN yarn install --frozen-lockfile
 COPY . ./
 
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
-RUN ./bin/rails assets:precompile
+RUN yarn build:css && ./bin/rails assets:precompile
 
 ENTRYPOINT ["/app/bin/docker-entrypoint"]
 
