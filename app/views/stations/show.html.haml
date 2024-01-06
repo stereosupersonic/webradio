@@ -6,4 +6,8 @@
   %audio{ controls: "controls", autoplay: "autoplay", src: @station.url }
 
 .mt-3
-  = link_to "Back", root_path, class: "btn btn-primary btn-lg", data: {turbo: false}
+  .row
+    .col
+      = link_to "Back", root_path, class: "btn btn-primary btn-lg", data: {turbo: false}
+    .col
+      = link_to "Edit", edit_station_path(@station), class: "btn btn-warning btn-lg", data: {turbo: false}

@@ -15,13 +15,14 @@ class BrowserInfoUpdater < BaseService
       data = JSON.parse(response.body, object_class: OpenStruct)[0]
       # Now 'data' contains the parsed JSON data.
       station.url = data.url_resolved
-      station.name = data.name
+      station.name = data.name if station.name.blank?
       station.logo_url = data.favicon if station.logo_url.blank?
-      station.homepage = data.homepage
-      station.save!
-      Rails.logger.info "Updated station #{station.name} from browser info"
+      station.homepage = data.homepage if station.homepage.blank?
+      Rails.logger.info "Updated station #{station.changes} from browser info"
+      true
     else
-      puts "Failed to fetch data: #{response.message}"
+      Rails.logger.error "Failed to fetch data: #{response.message}"
+      false
     end
   end
 end

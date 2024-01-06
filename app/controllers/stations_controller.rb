@@ -18,7 +18,7 @@ class StationsController < ApplicationController
 
   def create
     @station = Station.new(station_params)
-
+    BrowserInfoUpdater.new(station: @station).call
     respond_to do |format|
       if @station.save
         format.html { redirect_to station_url(@station), notice: "Station was successfully created." }
@@ -30,7 +30,7 @@ class StationsController < ApplicationController
 
   def update
     respond_to do |format|
-      if @station.update(station_params)
+      if BrowserInfoUpdater.new(station: @station).call && @station.update(station_params)
         format.html { redirect_to station_url(@station), notice: "Station was successfully updated." }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -55,6 +55,6 @@ class StationsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def station_params
-    params.require(:station).permit(:name, :url)
+    params.require(:station).permit(:name, :url, :browser_info_byuuid, :logo_url, :position, :homepage)
   end
 end

@@ -19,10 +19,16 @@
 #  index_stations_on_position  (position)
 #
 class Station < ApplicationRecord
+  validates :url, presence: true
+  validates :name, presence: true
+
+  scope :ordered, -> { order(position: :asc) }
+
   def self.create_by_browser_info(byuuid)
     return if byuuid.blank?
 
     station = Station.new browser_info_byuuid: byuuid, position: Station.count + 1
-    BrowserInfoUpdater.new(station:).call
+    BrowserInfoUpdater.new(station: station).call
+    station.save!
   end
 end
