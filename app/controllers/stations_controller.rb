@@ -2,10 +2,11 @@ class StationsController < ApplicationController
   before_action :set_station, only: %i[show edit update destroy]
 
   def index
-    @stations = Station.all
+    @stations = StationPresenter.wrap Station.all
   end
 
   def show
+    @station = StationPresenter.new(@station)
   end
 
   def new

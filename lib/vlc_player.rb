@@ -1,6 +1,6 @@
 require "timeout"
 
-#require 'lastfm'
+# require 'lastfm'
 
 class VlcPlayer
   def initialize(url)
@@ -34,7 +34,7 @@ class VlcPlayer
     # @token  ||= @lastfm.auth.get_token
     # puts "token: #{@token}"
     @token = "BwSdyS6lN9hxdnKrFK-oabxfKFABnuhh"
-    @session_token ||= @lastfm.auth.get_session(token: @token)['key']
+    @session_token ||= @lastfm.auth.get_session(token: @token)["key"]
 
     # open 'http://www.last.fm/api/auth/?api_key=3879f14f3720aeee9ff3e585f9778004&token=BwSdyS6lN9hxdnKrFK-oabxfKFABnuhh' and grant the application
 
@@ -43,12 +43,12 @@ class VlcPlayer
     @lastfm.track.search(now_playing)
 
     search_result = @lastfm.track.search(track: song.to_search_term,
-    limit: limit)['results']['trackmatches']['track'].compact
+      limit: limit)["results"]["trackmatches"]["track"].compact
     found_songs = []
 
     search_result.each do |r|
-      found_songs << @lastfm.track.get_info(track: r['name'],
-                                            artist: r['artist'])
+      found_songs << @lastfm.track.get_info(track: r["name"],
+        artist: r["artist"])
     end
 
     found_songs

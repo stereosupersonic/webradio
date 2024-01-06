@@ -8,8 +8,7 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-FactoryBot.create :station, position: 5, name: "Radio Bob", url: "http://streams.radiobob.de/bob-live/mp3-192/mediaplayer"
-FactoryBot.create :station, position: 1, name: "Radio Caroline", url: "http://sc6.radiocaroline.net/stream"
-FactoryBot.create :station, position: 2, name: "Absolute Radio", url: "http://edge-bauerall-01-gos2.sharp-stream.com/absoluteradio.mp3"
-FactoryBot.create :station, position: 3, name: "Radio X", url: "https://media-ssl.musicradio.com/RadioXLondon"
-FactoryBot.create :station, position: 4, name: "ROCK ANTENNE Hamburg", url: "http://stream.rockantenne.hamburg/rockantenne-hamburg/stream/mp3"
+FactoryBot.create :station, position: 5, name: "Radio Bob", url: "http://streams.radiobob.de/bob-live/mp3-192/mediaplayer", browser_info_byuuid: "92556f58-20d3-44ae-8faa-322ce5f256c0", homepage: "https://www.radiobob.de/"
+FactoryBot.create :station, position: 1, name: "Radio Caroline", url: "http://sc6.radiocaroline.net/stream", browser_info_byuuid: "9606ceae-0601-11e8-ae97-52543be04c81", logo_url: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Radio_Caroline_logo.svg/640px-Radio_Caroline_logo.svg.png"
+FactoryBot.create :station, position: 2, name: "Absolute Radio", url: "http://edge-bauerall-01-gos2.sharp-stream.com/absoluteradio.mp3", browser_info_byuuid: "39500a4d-5750-4a34-a8c9-d4da0018d322"
+FactoryBot.create :station, position: 3, name: "Radio X", url: "https://media-ssl.musicradio.com/RadioXLondon", browser_info_byuuid: "9617bbd8-0601-11e8-ae97-52543be04c81"

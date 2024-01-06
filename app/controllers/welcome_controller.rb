@@ -1,5 +1,5 @@
 class WelcomeController < ApplicationController
   def index
-    @stations = Station.order(:position)
+    @stations = StationPresenter.wrap Station.order(:position)
   end
 end

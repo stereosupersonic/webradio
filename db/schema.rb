@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_04_115436) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_06_144620) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,6 +20,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_04_115436) do
     t.integer "position", default: 100
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "description"
+    t.string "country"
+    t.string "browser_info_byuuid"
+    t.text "logo_url"
+    t.string "homepage"
     t.index ["position"], name: "index_stations_on_position"
   end
 

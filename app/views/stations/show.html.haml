@@ -1,5 +1,7 @@
 %h1= @station.name
 
+= link_to image_tag(@station.station_logo, class: "img-fluid"), @station.homepage, target: "_blank"
+
 .mt-3
   %audio{ controls: "controls", autoplay: "autoplay", src: @station.url }
 
