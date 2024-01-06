@@ -11,10 +11,10 @@
     = javascript_include_tag "application", "data-turbo-track": "reload", defer: true
 
   %body{class: "#{controller_name} #{action_name}"}
-    %ul.nav.navbar-light.bg-light
-      %a.navbar-brand{href: root_path} Webradio
-      -# %li.nav-item
-      -#   %a.nav-link{:href => "/stations"} Stations
+    .nav.navbar-light.bg-light
+      .container-fluid
+        .d-flex
+          =link_to "New Station", new_station_path, class: "btn btn-primary"
     .container
       .row
         - flash.each do |name, msg|
