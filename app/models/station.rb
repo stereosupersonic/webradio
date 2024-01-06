@@ -22,7 +22,7 @@ class Station < ApplicationRecord
   def self.create_by_browser_info(byuuid)
     return if byuuid.blank?
 
-    station = Station.new browser_info_byuuid: byuuid, postion: Station.count + 1
+    station = Station.new browser_info_byuuid: byuuid, position: Station.count + 1
     BrowserInfoUpdater.new(station:).call
   end
 end
