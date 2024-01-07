@@ -47,7 +47,7 @@ FactoryBot.create :station,
 
 FactoryBot.create :station,
   position: 3,
-  name: "181.FM - The Eagle (Classic)",,
+  name: "181.FM - The Eagle (Classic)",
   url: "http://listen.181fm.com/181-eagle_128k.mp3",
   browser_info_byuuid: "a1740fff-dbc9-4efa-b0cb-1fb51e38d3de",
   radiobox: "us/181fmclassic"
