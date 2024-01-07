@@ -39,8 +39,15 @@ FactoryBot.create :station,
   radiobox: "uk/radiox"
 
 FactoryBot.create :station,
-  position: 3,
+  position: 2,
   name: "marilu",
   url: "http://wma01.fluidstream.net/marilu",
   browser_info_byuuid: "9624d45b-0601-11e8-ae97-52543be04c81",
   radiobox: "it/marilu"
+
+FactoryBot.create :station,
+  position: 3,
+  name: "181.FM - The Eagle (Classic)",,
+  url: "http://listen.181fm.com/181-eagle_128k.mp3",
+  browser_info_byuuid: "a1740fff-dbc9-4efa-b0cb-1fb51e38d3de",
+  radiobox: "us/181fmclassic"
