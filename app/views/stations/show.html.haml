@@ -1,3 +1,6 @@
+- content_for :navbar do
+  = link_to "Back", root_path, class: "btn btn-primary btn-lg", data: {turbo: false}
+
 %h1= @station.name
 
 = link_to image_tag(@station.station_logo, class: "img-fluid"), @station.homepage, target: "_blank"
@@ -5,9 +8,7 @@
 .mt-3
   %audio{ controls: "controls", autoplay: "autoplay", src: @station.url }
 
-.mt-3
-  .row
-    .col
-      = link_to "Back", root_path, class: "btn btn-primary btn-lg", data: {turbo: false}
-    .col
-      = link_to "Edit", edit_station_path(@station), class: "btn btn-warning btn-lg", data: {turbo: false}
+-# .mt-3
+-#   .row
+-#     .col
+-#       = link_to "Edit", edit_station_path(@station), class: "btn btn-primary"

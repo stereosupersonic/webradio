@@ -10,17 +10,18 @@
     = stylesheet_link_tag "application", "data-turbo-track": "reload"
     = javascript_include_tag "application", "data-turbo-track": "reload", defer: true
 
-  %body{class: "#{controller_name} #{action_name}"}
+  %body{ class: "#{controller_name} #{action_name}" }
     .nav.navbar-light.bg-light
       .container-fluid
         .d-flex
-          =link_to "New Station", new_station_path, class: "btn btn-primary"
+          = yield :navbar
+
     .container
       .row
         - flash.each do |name, msg|
           - if msg.is_a?(String)
-            %div{class: "alert alert-#{name == :notice ? "success" : "error"}"}
-              %a.close{"data-dismiss" => "alert"} ×
+            %div{ class: "alert alert-#{name == :notice ? "success" : "error"}" }
+              %a.close{ "data-dismiss" => "alert" } ×
               = content_tag :div, msg, id: "flash_#{name}"
       .row
         .col
