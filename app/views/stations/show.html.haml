@@ -8,7 +8,10 @@
 .mt-3
   %audio{ controls: "controls", autoplay: "autoplay", src: @station.url }
 
--# .mt-3
--#   .row
--#     .col
--#       = link_to "Edit", edit_station_path(@station), class: "btn btn-primary"
+.mt-3
+  .row
+    .col
+      - #
+      = link_to "last track", station_current_tracks_path(@station), class: "btn btn-info"
+    .col
+      = link_to "Edit", edit_station_path(@station), class: "btn btn-primary"

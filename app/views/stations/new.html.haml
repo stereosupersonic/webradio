@@ -1,5 +1,6 @@
+- content_for :navbar do
+  = link_to "Back", root_path, class: "btn btn-primary btn-lg", data: {turbo: false}
+
 %h1 New station
 
 = render "form", station: @station
-
-= link_to "Back", stations_path

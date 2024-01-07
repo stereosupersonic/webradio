@@ -1,0 +1,26 @@
+- content_for :navbar do
+  = link_to "Back", root_path, class: "btn btn-primary btn-lg", data: {turbo: false}
+
+
+%h1= "Current Track on #{@station.name}"
+
+%h3="#{@current_track.title} - #{@current_track.artist}"
+
+%h4="Album: #{@last_fm.album}"
+
+= image_tag @last_fm.album_image, class: "img-fluid"
+
+-# .mt-3
+-#   = simple_format @last_fm.wiki_short
+
+.mt-3
+  = simple_format @last_fm.wiki
+
+.mt-3
+  = link_to  @station.radio_box_url, @station.radio_box_url, target: "_blank"
+
+.mt-3
+  = debug @current_track
+
+.mt-3
+  = debug @last_fm.response

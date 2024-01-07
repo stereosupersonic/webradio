@@ -7,8 +7,10 @@
       %th Name
       %th Byuuid
       %th Homepage
+      %th RadioBox
       %th
       %th
+      -# %th
 
   %tbody
     - @stations.each do |station|
@@ -16,10 +18,11 @@
         %td= image_tag station.station_logo, width: 100, height: 100
         %td= station.name
         %td= station.browser_info_byuuid
+        %td= station.radiobox
         %td= station.homepage
-        %td= link_to "Show", station
-        %td= link_to "Edit", edit_station_path(station)
-        %td= link_to "Destroy", station, method: :delete, data: {confirm: "Are you sure?"}
+        %td= link_to "Show", station, class: "btn btn-success"
+        %td= link_to "Edit", edit_station_path(station), class: "btn btn-warning"
+        -# %td= link_to "Destroy", station, method: :delete, data: {confirm: "Are you sure?"}
 
 %br
 

@@ -10,6 +10,7 @@
 #  logo_url            :text
 #  name                :string
 #  position            :integer          default(100)
+#  radiobox            :string
 #  url                 :text
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
