@@ -1,0 +1,22 @@
+
+
+- if current_track
+  %h5= "#{current_track.title} - #{current_track.artist}"
+- else
+  = "No current track"
+
+- if last_fm
+  .row
+    .col-9
+      = image_tag last_fm.album_image, class: "img-thumbnail" if last_fm.album_image.present?
+      .mt-1
+        %h5= last_fm.album
+      - if last_fm&.wiki_short.present?
+        .mt-2
+
+          = simple_format last_fm.wiki_short
+
+  -# DEBUG
+  -# .row
+  -#   .col-9
+  -#     = debug last_fm.response

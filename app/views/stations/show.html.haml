@@ -1,17 +1,13 @@
 - content_for :navbar do
   = link_to "Back", root_path, class: "btn btn-primary btn-lg", data: {turbo: false}
-
-%h1= @station.name
-
-= link_to image_tag(@station.station_logo, class: "img-fluid"), @station.homepage, target: "_blank"
-
-.mt-3
-  %audio{ controls: "controls", autoplay: "autoplay", src: @station.url }
+  = link_to image_tag(@station.station_logo, class: "img-thumbnail", size: "50x50"), @station.homepage, target: "_blank"
+  .m-1
+    %h2= @station.name
+  .m-1a
+    %audio{ controls: "controls", autoplay: "autoplay", src: @station.url }
 
 .mt-3
-  .row
-    .col
-      - #
-      = link_to "last track", station_current_tracks_path(@station), class: "btn btn-info"
-    .col
-      = link_to "Edit", edit_station_path(@station), class: "btn btn-primary"
+  %div{"data-controller" => "content-loader",
+        "data-content-loader-refresh-interval-value" => "5000",
+        "data-content-loader-url-value" => "#{station_current_tracks_path(@station, show_album_info: true)}" }
+    Loading Track informations...

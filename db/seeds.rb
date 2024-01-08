@@ -39,6 +39,13 @@ FactoryBot.create :station,
   radiobox: "uk/radiox"
 
 FactoryBot.create :station,
+  position: 3,
+  name: "XS Manchester",
+  url: "https://parg.co/U84n",
+  browser_info_byuuid: "35ceded1-e990-4017-b5b4-2e95102a6b41",
+  radiobox: "uk/xsmanchester"
+
+FactoryBot.create :station,
   position: 2,
   name: "marilu",
   url: "http://wma01.fluidstream.net/marilu",

@@ -28,7 +28,7 @@ class LastFmApi
   end
 
   def album_image
-    @response.dig("album", "image").presence.last["#text"]
+    @response.dig("album", "image").presence&.last&.fetch("#text")
   end
 
   def wiki_short
@@ -60,8 +60,11 @@ class LastFmApi
   end
 
   def fetch_data
+    # Rails.logger.info url
     raw_response = URI.open(url) { |f| f.read }
-    @response = JSON.parse(raw_response)["track"] || {}
+    json_repose = JSON.parse(raw_response)
+    # Rails.logger.info json_repose
+    @response = json_repose["track"] || {}
     @response
   end
 
