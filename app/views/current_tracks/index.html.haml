@@ -8,14 +8,13 @@
 
   - if @last_fm
     .row
-      .col-2
+      .col-3
         = image_tag @last_fm.album_image, class: "img-thumbnail" if @last_fm.album_image.present?
-      .col-9
-        .mt-1
-          %h5= @last_fm.album
-          - if @last_fm&.wiki_short.present?
-            = simple_format @last_fm.wiki_short
-
+      .col-8
+        %h5= @last_fm.album
+        - if @last_fm&.wiki_short.present?
+          = simple_format @last_fm.wiki_short
+      .col-1
     -# DEBUG
     -# .row
     -#   .col-9
