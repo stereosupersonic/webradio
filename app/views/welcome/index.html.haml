@@ -9,10 +9,9 @@
 
         .card-body.bg-light
           .p.card-text.bg-light
-            %div{"data-controller" => "content-loader",
-             "data-content-loader-refresh-interval-value" => "5000",
-             "data-content-loader-url-value" => "#{station_current_tracks_path(station)}" }
+            = turbo_frame_tag "trackinfo_station_#{station.id}", loading: :lazy, src: station_current_tracks_path(station), data: { controller: :trackinfo } do
               Loading Track informations...
+
         .card-footer
           .d-grid.gap-2.mt-1
             = link_to "PLAY #{station.name}", station, class: "btn btn-warning btn-lg"

@@ -1,13 +1,13 @@
 - content_for :navbar do
-  = link_to "Back", root_path, class: "btn btn-primary btn-lg", data: {turbo: false}
-  = link_to image_tag(@station.station_logo, class: "img-thumbnail", size: "50x50"), @station.homepage, target: "_blank"
   .m-1
+    = link_to "Back", root_path, class: "btn btn-primary btn-lg", data: {turbo: false}
+  .px-2
+    = link_to image_tag(@station.station_logo, class: "img-thumbnail", size: "50x50"), @station.homepage, target: "_blank"
+  .px-1
     %h2= @station.name
-  .m-1a
-    %audio{ controls: "controls", autoplay: "autoplay", src: @station.url }
 
-.mt-3
-  %div{"data-controller" => "content-loader",
-        "data-content-loader-refresh-interval-value" => "5000",
-        "data-content-loader-url-value" => "#{station_current_tracks_path(@station, show_album_info: true)}" }
+  %audio{ controls: "controls", autoplay: "autoplay", src: @station.url }
+
+.mt-1
+  = turbo_frame_tag "trackinfo_station_#{@station.id}", loading: :lazy, src: station_current_tracks_path(@station, show_album_info: true), data: { controller: :trackinfo } do
     Loading Track informations...

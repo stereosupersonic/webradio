@@ -7,5 +7,5 @@ import { application } from "./application"
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 
-import ContentLoader from "stimulus-content-loader"
-application.register("content-loader", ContentLoader)
+import TrackinfoController from "./trackinfo_controller"
+application.register("trackinfo", TrackinfoController)
