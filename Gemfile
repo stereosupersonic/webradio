@@ -84,3 +84,5 @@ gem "rubocop-performance", "~> 1.20"
 gem "rubocop-rspec", "~> 2.26"
 gem "rubocop-factory_bot", "~> 2.25"
 gem "rubocop-capybara", "~> 2.20"
+
+gem "solid_cache", "~> 0.3.0"

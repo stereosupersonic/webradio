@@ -291,6 +291,10 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
+    solid_cache (0.3.0)
+      activejob (>= 7)
+      activerecord (>= 7)
+      railties (>= 7)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -353,6 +357,7 @@ DEPENDENCIES
   rubocop-performance (~> 1.20)
   rubocop-rails (~> 2.23)
   rubocop-rspec (~> 2.26)
+  solid_cache (~> 0.3.0)
   sprockets-rails
   stimulus-rails
   turbo-rails

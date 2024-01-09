@@ -55,7 +55,8 @@ class LastFmApi
       album_image: album_image,
       wiki_short: wiki_short,
       wiki: wiki,
-      response: @response
+      response: @response,
+      fetched_at: Time.now
     )
   end
 
