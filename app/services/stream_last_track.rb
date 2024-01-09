@@ -1,11 +1,10 @@
-
-require 'uri'
-require 'net/http'
+require "uri"
+require "net/http"
 
 HEADERS = {
-  "Icy-MetaData" => '1'
+  "Icy-MetaData" => "1"
 }
-class  StreamLastTrack < BaseService
+class StreamLastTrack < BaseService
   Response = Struct.new(:artist, :title, :response, :played_at)
 
   attr_reader :fetched_data
@@ -35,17 +34,17 @@ class  StreamLastTrack < BaseService
         chunk_count += 1
         if chunk =~ /StreamTitle='(.+?)';/
           return $1
-          break;
+          break
         elsif chunk_count > chunk_limit
           return nil
         end
       end
-    rescue StandardError => e
+    rescue => e
       Rails.logger.error "stream #{url} parse failed with message: #{e.message}"
     end
 
     # Just in case we get an HTTP error
-    return nil
+    nil
   end
 
   def extract_title_artist
