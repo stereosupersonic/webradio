@@ -1,17 +1,18 @@
 = turbo_frame_tag "trackinfo_station_#{@station.id}" do
   .row
-    .col-12.mt-3.mb-3
+    .col-12
       - if @current_track
-        %h5= "#{@current_track.title} - #{@current_track.artist}"
+        %h5= "#{@current_track.artist} - #{@current_track.title}"
       - else
-        = "No current track"
+        = "no track info available"
 
   - if @last_fm
-    .row
+    .row.mt-5
       .col-3
-        = image_tag @last_fm.album_image, class: "img-thumbnail" if @last_fm.album_image.present?
+        = image_tag @last_fm.album_image, class: "img-thumbnail d-block m-auto" if @last_fm.album_image.present?
+        .mt-2
+          %h5.text-center= @last_fm.album
       .col-8
-        %h5= @last_fm.album
         - if @last_fm&.wiki_short.present?
           = simple_format @last_fm.wiki_short
       .col-1
