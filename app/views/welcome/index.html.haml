@@ -1,17 +1,17 @@
-.row.card-deck
-  - @stations.each do |station|
-    %div{ id: dom_id(station), class: "col-2 d-flex align-items-stretch" }
-      .card.m-1
-        .card-header
-          %h4.text-center= station.name
-        .blah{style: "min-height: 55vh"}
-          = link_to image_tag(station.station_logo, size: "400x400", class: "img-fluid"), station
-        .card-body
-          .text-wrap.text-center
-            = turbo_frame_tag "trackinfo_station_#{station.id}", loading: :lazy, src: station_current_tracks_path(station), data: { controller: :trackinfo } do
-              Loading Track informations...
 
-        .card-footer
-          .d-grid.gap-2.mt-1
-            = link_to station, class: "btn btn-secondary btn-lg" do
-              %i.fa-solid.fa-play
+%table.table.table-striped.table-hover
+  %thead
+    %tr
+      %th
+      %th
+      %th
+  %tbody
+    - @stations.each do |station|
+      %tr
+        %td= link_to image_tag(station.station_logo, size: "100x100", class: "img-fluid"), station
+        %td
+          %h3=link_to station.name, station
+        %td
+          = turbo_frame_tag "trackinfo_station_#{station.id}", loading: :lazy, src: station_current_tracks_path(station), data: { controller: :trackinfo } do
+            Loading Track informations...
+        %td= link_to('<i class="fa-solid fa-play"></i>'.html_safe, station, class: "btn btn-secondary btn-lg")

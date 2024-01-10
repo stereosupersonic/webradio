@@ -3,7 +3,7 @@ class CurrentTracksController < ApplicationController
     @station = StationPresenter.new Station.find(params[:station_id])
 
     if @station.radiobox.present?
-      @current_track = StreamLastTrack.new(url: @station.url).call
+      @current_track = StreamLastTrack.new(url: @station.url).call unless @station.ignore_tracks_from_stream?
       @current_track ||= RadioboxLastTrack.new(url: @station.radio_box_url).call
 
       @last_fm = if @current_track && params[:show_album_info] == "true"

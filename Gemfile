@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby file: ".ruby-version"
+# ruby file: ".ruby-version" this does not work with docker
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.2"
@@ -49,11 +49,24 @@ gem "bootsnap", require: false
 
 gem "haml-rails", "~> 2.1"
 
+gem "solid_cache", "~> 0.3.0"
+gem "factory_bot_rails", "~> 6.4"
+
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "pry-nav", "~> 1.0"
   gem "rubocop", "~> 1.59"
   gem "haml_lint", "~> 0.52.0"
+
+  gem "annotate", ">= 3.2", group: :development
+
+  gem "rubocop-rails", "~> 2.23"
+  gem "rubocop-performance", "~> 1.20"
+  gem "rubocop-rspec", "~> 2.26"
+  gem "rubocop-factory_bot", "~> 2.25"
+  gem "rubocop-capybara", "~> 2.20"
+
 end
 
 group :development do
@@ -76,15 +89,3 @@ group :test do
   gem "launchy" # for capybara save_and_open_page
   gem "webdrivers"
 end
-
-gem "factory_bot_rails", "~> 6.4"
-
-gem "annotate", ">= 3.2", group: :development
-
-gem "rubocop-rails", "~> 2.23"
-gem "rubocop-performance", "~> 1.20"
-gem "rubocop-rspec", "~> 2.26"
-gem "rubocop-factory_bot", "~> 2.25"
-gem "rubocop-capybara", "~> 2.20"
-
-gem "solid_cache", "~> 0.3.0"

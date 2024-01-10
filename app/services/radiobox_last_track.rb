@@ -23,6 +23,8 @@ class RadioboxLastTrack < BaseService
       return
     end
 
+    Rails.logger.info "fetched_data: #{fetched_data}"
+
     response = extract_title_artist
 
     return if response.nil?
@@ -44,8 +46,8 @@ class RadioboxLastTrack < BaseService
   end
 
   def extract_title_artist
-    ["-", ":"].each do |splitter|
-      artist, title = *fetched_data.split(" #{splitter} ")
+    [" - ", " : ", ": ", "- "].each do |splitter|
+      artist, title = *fetched_data.split(splitter.to_s)
       artist = normalize(artist)
       title = normalize(title)
       if valid_value?(title) && valid_value?(artist)

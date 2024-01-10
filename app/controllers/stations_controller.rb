@@ -55,6 +55,6 @@ class StationsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def station_params
-    params.require(:station).permit(:name, :url, :browser_info_byuuid, :logo_url, :position, :homepage)
+    params.require(:station).permit(:name, :url, :browser_info_byuuid, :logo_url, :radiobox, :position, :homepage, :ignore_tracks_from_stream)
   end
 end

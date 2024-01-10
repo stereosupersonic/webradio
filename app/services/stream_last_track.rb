@@ -32,6 +32,7 @@ class StreamLastTrack < BaseService
     begin
       http.get(uri.path, HEADERS) do |chunk|
         chunk_count += 1
+        # Rails.logger.info "chunk: #{chunk} #{chunk_count}"
         if chunk =~ /StreamTitle='(.+?)';/
           return $1
           break

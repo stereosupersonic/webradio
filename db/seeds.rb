@@ -14,7 +14,8 @@ FactoryBot.create :station,
   url: "http://streams.radiobob.de/bob-live/mp3-192/mediaplayer",
   browser_info_byuuid: "92556f58-20d3-44ae-8faa-322ce5f256c0",
   homepage: "https://www.radiobob.de/",
-  radiobox: "de/radiobob"
+  radiobox: "de/radiobob",
+  ignore_tracks_from_stream: true
 
 FactoryBot.create :station,
   position: 1,
@@ -58,3 +59,24 @@ FactoryBot.create :station,
   url: "http://listen.181fm.com/181-eagle_128k.mp3",
   browser_info_byuuid: "a1740fff-dbc9-4efa-b0cb-1fb51e38d3de",
   radiobox: "us/181fmclassic"
+
+FactoryBot.create :station,
+  position: 4,
+  name: "FM4",
+  url: "https://orf-live.ors-shoutcast.at/fm4-q2a",
+  browser_info_byuuid: "11b7f71c-5525-42f8-bce5-ac370105ea57",
+  radiobox: "at/fm4"
+
+FactoryBot.create :station,
+  position: 80,
+  name: "BR 2",
+  url: "http://streams.br.de/bayern2_2.m3u",
+  browser_info_byuuid: "9606ca07-0601-11e8-ae97-52543be04c81",
+  radiobox: "de/bayern2"
+
+FactoryBot.create :station,
+  position: 80,
+  name: "Bayern 1 Obberbayern",
+  url: "http://streams.br.de/bayern1_2.m3u",
+  browser_info_byuuid: "7a49c017-1391-4e18-a4d8-a9bab58516e6",
+  radiobox: "de/bayern1"

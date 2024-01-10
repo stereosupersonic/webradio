@@ -27,7 +27,11 @@
 
   .mb-3
     = f.label :position, class: "form-label"
-    = f.number_field :position, in: 1..100, step: 1, class: "form-control"
+    = f.number_field :position, in: 1..100, step: 1, class: "form-range"
+
+  .mb-3
+    = f.label :ignore_tracks_from_stream, class: "form-label"
+    = f.check_box :ignore_tracks_from_stream, class: "form-check-input"
 
   .mb-3.actions
     = f.submit "Save"

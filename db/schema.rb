@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_09_134330) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_10_163122) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -33,6 +33,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_09_134330) do
     t.text "logo_url"
     t.string "homepage"
     t.string "radiobox"
+    t.boolean "ignore_tracks_from_stream", default: false, null: false
     t.index ["position"], name: "index_stations_on_position"
   end
 
