@@ -1,5 +1,5 @@
 !!!
-%html
+%html{ lang: "en", "data-bs-theme" => "dark"}
   %head
     %meta{ name: "viewport", content: "width=device-width,initial-scale=1" }
     %title WebRadio
@@ -10,9 +10,9 @@
     = stylesheet_link_tag "application", "data-turbo-track": "reload"
     = javascript_include_tag "application", "data-turbo-track": "reload", defer: true
 
-  %body{ class: "bg-light #{controller_name} #{action_name}" }
-    .container-fluid.bg-white.border.pb-3
-      .nav.navbar-light.bg-light
+  %body{ class: "#{controller_name} #{action_name}" }
+    .container-fluid.border.pb-3
+      .nav.navbar-light
         .d-flex
           = yield :navbar
 

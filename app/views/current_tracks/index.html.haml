@@ -2,7 +2,7 @@
   .row
     .col-12
       - if @current_track
-        %h5= "#{@current_track.artist} - #{@current_track.title}"
+        = "#{@current_track.artist} - #{@current_track.title}"
       - else
         = "no track info available"
 
@@ -14,7 +14,7 @@
           %h5.text-center= @last_fm.album
       .col-8
         - if @last_fm&.wiki_short.present?
-          = simple_format @last_fm.wiki_short
+          %h5= simple_format @last_fm.wiki_short
       .col-1
     -# DEBUG
     -# .row

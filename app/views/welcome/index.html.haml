@@ -8,10 +8,11 @@
   %tbody
     - @stations.each do |station|
       %tr
-        %td= link_to image_tag(station.station_logo, size: "100x100", class: "img-fluid"), station
-        %td
-          %h3=link_to station.name, station
-        %td
-          = turbo_frame_tag "trackinfo_station_#{station.id}", loading: :lazy, src: station_current_tracks_path(station), data: { controller: :trackinfo } do
-            Loading Track informations...
-        %td= link_to('<i class="fa-solid fa-play"></i>'.html_safe, station, class: "btn btn-secondary btn-lg")
+        %td.align-middle= link_to image_tag(station.station_logo, size: "80x80", class: "img-fluid"), station
+        %td.align-middle
+          %h3=link_to station.name, station #, class: "btn btn-light stretched-link"
+        %td.align-middle
+          %h4
+            = turbo_frame_tag "trackinfo_station_#{station.id}", loading: :lazy, src: station_current_tracks_path(station), data: { controller: :trackinfo } do
+              Loading Track informations...
+        %td.align-middle= link_to('<i class="fa-solid fa-play"></i>'.html_safe, station, class: "btn btn-secondary btn-lg")
