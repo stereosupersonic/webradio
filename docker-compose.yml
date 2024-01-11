@@ -5,7 +5,7 @@ x-base: &base
     context: .
     dockerfile: ./Dockerfile
     args:
-      - RUBY_VERSION='3.1.4'
+      - RUBY_VERSION=3.1.4
       - OPENAI_ACCESS_TOKEN=${OPENAI_ACCESS_TOKEN}
       - LASTFM_API_KEY=${LASTFM_API_KEY}
   tty: true
