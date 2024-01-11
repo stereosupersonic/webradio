@@ -4,9 +4,9 @@
       = link_to "Back", root_path, class: "btn btn-secondary btn-lg", data: {turbo: false}
     .col-2
       = link_to image_tag(@station.station_logo, class: "img-thumbnail", size: "50x50"), @station.homepage, target: "_blank"
-    .col-7
+    .col-6
       %h2= @station.name
-    .col-1
+    .col-2
       %audio{ controls: "controls", autoplay: "autoplay", src: @station.url }
 
 .pt-3.mt-3.mb-3.border-top
