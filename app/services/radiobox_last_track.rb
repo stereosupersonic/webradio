@@ -9,7 +9,7 @@ require "open-uri"
 
 class RadioboxLastTrack < BaseService
   SELECTOR = ".playlist .tablelist-schedule tr:first td[2]".freeze
-  Response = Struct.new(:artist, :title, :response, :played_at)
+  Response = Struct.new(:artist, :title, :response, :played_at, :key)
 
   attr_reader :fetched_data
   attr_accessor :url
@@ -30,7 +30,8 @@ class RadioboxLastTrack < BaseService
     return if response.nil?
 
     played_at = Time.current # TODO: use the real date
-    Response.new(response.artist, response.title, value.to_html, played_at)
+    key = "#{response.artist}-#{response.title}".parameterize
+    Response.new(response.artist, response.title, value.to_html, played_at, key)
   end
 
   private

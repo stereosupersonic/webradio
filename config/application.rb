@@ -40,7 +40,10 @@ module Webradio
     config.time_zone = "Berlin"
 
     # config.i18n.default_locale = :de
-
+    # Load dotenv only in development or test environment
+    if ["development", "test"].include? ENV["RAILS_ENV"]
+      Dotenv::Railtie.load
+    end
     config.generators do |g|
       g.assets = false
       g.helper = false

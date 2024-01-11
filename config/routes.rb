@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "track_infos/index"
   resources :stations do
     resources :current_tracks, only: [:index]
   end

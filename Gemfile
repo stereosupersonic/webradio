@@ -52,6 +52,8 @@ gem "haml-rails", "~> 2.1"
 gem "solid_cache", "~> 0.3.0"
 gem "factory_bot_rails", "~> 6.4"
 
+gem "ruby-openai", "~> 6.3"
+
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -67,6 +69,7 @@ group :development, :test do
   gem "rubocop-factory_bot", "~> 2.25"
   gem "rubocop-capybara", "~> 2.20"
 
+  gem "dotenv-rails", "~> 2.8"
 end
 
 group :development do

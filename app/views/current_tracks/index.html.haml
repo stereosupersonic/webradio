@@ -5,17 +5,18 @@
         = "#{@current_track.artist} - #{@current_track.title}"
       - else
         = "no track info available"
-
-  - if @last_fm
+  - if @current_track && params[:show_album_info] == "true"
     .row.mt-5
       .col-3
-        = image_tag @last_fm.album_image, class: "img-thumbnail d-block m-auto" if @last_fm.album_image.present?
-        .mt-2
-          %h5.text-center= @last_fm.album
-      .col-8
-        - if @last_fm&.wiki_short.present?
-          %h5= simple_format @last_fm.wiki_short
-      .col-1
+        -if @last_fm
+          = image_tag @last_fm.album_image, class: "img-thumbnail d-block m-auto" if @last_fm.album_image.present?
+          .mt-2
+            %h5.text-center= @last_fm.album
+      .col-9
+        %h5
+          = turbo_frame_tag "chat_gpt_#{@current_track.key}", src: track_infos_path(key: @current_track.key, artist: @current_track.artist, title: @current_track.title) do
+            Asking ChatGPT ...
+
     -# DEBUG
     -# .row
     -#   .col-9

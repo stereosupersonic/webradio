@@ -5,7 +5,7 @@ HEADERS = {
   "Icy-MetaData" => "1"
 }
 class StreamLastTrack < BaseService
-  Response = Struct.new(:artist, :title, :response, :played_at)
+  Response = Struct.new(:artist, :title, :response, :played_at, :key)
 
   attr_reader :fetched_data
   attr_accessor :url
@@ -17,8 +17,8 @@ class StreamLastTrack < BaseService
     response = extract_title_artist
 
     return if response.nil?
-
-    Response.new(response.artist, response.title, @fetched_data, Time.current)
+    key = "#{response.artist}-#{response.title}".parameterize
+    Response.new(response.artist, response.title, @fetched_data, Time.current, key)
   end
 
   private
@@ -35,7 +35,6 @@ class StreamLastTrack < BaseService
         # Rails.logger.info "chunk: #{chunk} #{chunk_count}"
         if chunk =~ /StreamTitle='(.+?)';/
           return $1
-          break
         elsif chunk_count > chunk_limit
           return nil
         end

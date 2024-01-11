@@ -9,7 +9,7 @@ class LastFmApi
     @title = title
   end
 
-  # http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=03a888a88c3abea4963563b3f736862c&artist=cher&track=believe&format=json
+  # http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=<LASTFM_API_KEY>&artist=cher&track=believe&format=json
   def call
     fetch_data
     result
@@ -72,7 +72,7 @@ class LastFmApi
   def params
     {
       method: "track.getInfo",
-      api_key: "03a888a88c3abea4963563b3f736862c", # ENV["LASTFM_API_KEY"],
+      api_key: ENV["LASTFM_API_KEY"],
       artist: @artist,
       track: @title,
       autocorrect: 1,

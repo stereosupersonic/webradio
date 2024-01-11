@@ -7,8 +7,7 @@ class CurrentTracksController < ApplicationController
       @current_track ||= RadioboxLastTrack.new(url: @station.radio_box_url).call
 
       @last_fm = if @current_track && params[:show_album_info] == "true"
-        cache_key = "current_track/#{@current_track.artist}-#{@current_track.title}".parameterize
-        Rails.cache.fetch(cache_key) do
+        Rails.cache.fetch("current_track/#{@current_track.key}") do
           LastFmApi.new(artist: @current_track.artist, title: @current_track.title).call
         end
       end
