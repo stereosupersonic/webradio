@@ -5,7 +5,7 @@ class TrackInfosController < ApplicationController
     @current_track_key = params[:key]
     Rails.logger.info "artist: #{artist} -title: #{title}"
 
-    @chat_gpt_said = if artist.present? && title.present?
+    @chat_gpt_said = if @current_track_key.present?
       cache_key = "v1/current_track_chat_gpt/#{@current_track_key}".parameterize
       Rails.cache.fetch(cache_key) do
         TrackInfoChatGpt.new(artist: artist, title: title).call
