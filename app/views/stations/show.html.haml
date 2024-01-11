@@ -10,6 +10,6 @@
       %audio{ controls: "controls", autoplay: "autoplay", src: @station.url }
 
 .pt-3.mt-3.mb-3.border-top
-  %h1
+  %h1.fw-bolder
     = turbo_frame_tag "trackinfo_station_#{@station.id}", loading: :lazy, src: station_current_tracks_path(@station, show_album_info: true), data: { controller: :trackinfo } do
       Loading Track informations...
