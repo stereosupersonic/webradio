@@ -6,7 +6,6 @@ x-base: &base
     dockerfile: ./Dockerfile
     args:
       RUBY_VERSION: '3.1.4'
-      OPENAI_ACCESS_TOKEN: "dummy"
   tty: true
   restart: "${DOCKER_RESTART_POLICY:-unless-stopped}"
   stop_grace_period: "3s"
