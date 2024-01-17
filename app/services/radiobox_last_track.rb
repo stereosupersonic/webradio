@@ -15,6 +15,8 @@ class RadioboxLastTrack < BaseService
   attr_accessor :url
 
   def call
+    return if @url.blank?
+
     value = Array(doc.css(SELECTOR))[0]
     @fetched_data = value&.text
 
