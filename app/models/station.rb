@@ -32,5 +32,6 @@ class Station < ApplicationRecord
     station = Station.new browser_info_byuuid: byuuid, position: Station.count + 1
     BrowserInfoUpdater.new(station: station).call
     station.save!
+    station
   end
 end
