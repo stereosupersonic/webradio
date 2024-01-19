@@ -1,6 +1,8 @@
 = turbo_frame_tag "albuminfo_station_#{@station.id}" do
-  -if @last_fm
-    - # TODO: show default album
-    = image_tag @last_fm.album_image, class: "img-thumbnail d-block m-auto" if @last_fm.album_image.present?
+  - if @spotify_album
+    = image_tag @spotify_album.images[0]["url"], class: "img-thumbnail d-block m-auto" if @spotify_album.images[0].present?
     .mt-2
-      %h5.text-center= @last_fm.album9
+      %h5.text-center= @spotify_album.name
+      .text-center= @spotify_album.release_date
+  - else
+    No Album Info on Spotify
