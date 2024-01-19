@@ -1,22 +1,21 @@
 # syntax = docker/dockerfile:1
 
 # Make sure RUBY_VERSION matches the Ruby version in .ruby-version and Gemfile
-ARG RUBY_VERSION=3.1.2
+ARG RUBY_VERSION=3.1.4
+ARG RAILS_ENV="production"
 
-FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim as base
+FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim-bookworm as base
 
 # Rails app lives here
 WORKDIR /rails
 
 # Set production environment
-ENV RAILS_ENV="production" \
-    BUNDLE_DEPLOYMENT="1" \
+ENV BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
     BUNDLE_WITHOUT="development" \
     BUNDLER_VERSION=2.5.5 \
-    BUNDLE_RETRY=3
-
-ENV SECRET_KEY_BASE=c77ac8fa8a7b1d2b039972f1b2d266b1ac9b10890d314ef19595bc6869d73e050ad90aaee07c0d4309ca6028588a561c0bc31162bc9673c8d1dc110ba949759d
+    BUNDLE_RETRY=3 \
+    SECRET_KEY_BASE=c77ac8fa8a7b1d2b039972f1b2d266b1ac9b10890d314ef19595bc6869d73e050ad90aaee07c0d4309ca6028588a561c0bc31162bc9673c8d1dc110ba949759d
 
 # Throw-away build stage to reduce size of final image
 FROM base as build
@@ -25,8 +24,8 @@ FROM base as build
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential curl git libvips libpq-dev node-gyp pkg-config python-is-python3
 
-# Install JavaScript dependencies
-ARG NODE_VERSION=18.19.0
+# Install nodejs and yarn
+ARG NODE_VERSION=20.9.0
 ARG YARN_VERSION=1.22.21
 ENV PATH=/usr/local/node/bin:$PATH
 RUN curl -sL https://github.com/nodenv/node-build/archive/master.tar.gz | tar xz -C /tmp/ && \
@@ -54,7 +53,6 @@ RUN bundle exec bootsnap precompile app/ lib/
 
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
-
 
 # Final stage for app image
 FROM base
