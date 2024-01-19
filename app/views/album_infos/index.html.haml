@@ -6,7 +6,7 @@
       %h6.text-center
         %span.text-muted Release Date:
         %span
-          - if @spotify_album.release_date
-            = Date.parse(@spotify_album.release_date).strftime("%B %Y") #  January 2023
+          - if @spotify_album.release_date.present?
+            = Date.parse(@spotify_album.release_date).strftime("%B %Y") rescue  "Error" #  January 2023
   - else
     No Album Info on Spotify
