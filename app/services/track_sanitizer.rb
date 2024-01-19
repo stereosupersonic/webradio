@@ -14,7 +14,7 @@ class TrackSanitizer < BaseService
     text = fix_encoding text.encode("UTF-8", invalid: :replace, replace: "")
     remove_unwanted(text).squish.titleize
   rescue Encoding::UndefinedConversionError => e
-    msg = "Encoding::UndefinedConversionError: '#{text.force_encoding('UTF-8')}' #{e.message}"
+    msg = "#{self.class.name}: Encoding::UndefinedConversionError => '#{text.force_encoding('UTF-8')}' #{e.message}"
     Rollbar.error(msg, e)
     Rails.logger.error msg
     ""

@@ -48,6 +48,14 @@ class RadioboxLastTrack < LastTrackBase
     # better way to do this is to use a proxy
 
     URI.open @url # rewrite this
+  rescue OpenURI::HTTPError => e
+    if e.message == '404 Not Found'
+       msg = "#{self.class.name}: 404 Not Found for url: #{@url}"
+       Rollbar.warning msg
+       Rails.logger.error msg
+       return nil
+    end
+    raise e
   end
 
   def doc

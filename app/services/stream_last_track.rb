@@ -46,7 +46,7 @@ class StreamLastTrack < LastTrackBase
         end
       end
     rescue => e
-      msg = "stream #{station.name} - parse failed with message: #{e.message}"
+      msg = "#{self.class.name}: stream #{station.name} - parse failed with message: #{e.message}"
       Rollbar.warning(msg, e)
       Rails.logger.error msg
     end

@@ -1,7 +1,8 @@
 - content_for :navbar do
   .row
     .col-2
-      = link_to "Back", root_path, class: "btn btn-secondary btn-lg", data: {turbo: false}
+      = link_to root_path, class: "btn btn-secondary btn-lg", data: { turbo: false } do
+        %i.fas.fa-arrow-left.fa-2x
     .col-1
       = link_to image_tag(@station.station_logo, class: "img-thumbnail", size: "50x50"), @station.homepage, target: "_blank"
     .col-4
