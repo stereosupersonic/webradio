@@ -38,6 +38,7 @@ class StreamLastTrack < LastTrackBase
         end
       end
     rescue => e
+      Rollbar.error(e)
       Rails.logger.error "stream #{url} parse failed with message: #{e.message}"
     end
 

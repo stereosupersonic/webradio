@@ -19,6 +19,8 @@ x-base: &base
     - LASTFM_API_KEY=${LASTFM_API_KEY}
     - SPOTIFY_CLIENT_ID=${SPOTIFY_CLIENT_ID}
     - SPOTIFY_CLIENT_SECRET=${SPOTIFY_CLIENT_SECRET}
+    - ROLLBAR_ENABLED=${ROLLBAR_ENABLED}
+    - ROLLBAR_ACCESS_TOKEN=${ROLLBAR_ACCESS_TOKEN}
   depends_on:
     postgres:
       condition: service_healthy
