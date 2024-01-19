@@ -1,8 +1,7 @@
 # Usage:
 #  TrackInfoChatGpt.new(artist: "The Beatles", title: "Yesterday").call
-
 require "ruby/openai"
-require "JSON"
+# require "JSON"
 
 class TrackInfoChatGpt
   attr_reader :artist, :title, :client

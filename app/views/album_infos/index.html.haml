@@ -3,6 +3,10 @@
     = image_tag @spotify_album.images[0]["url"], class: "img-thumbnail d-block m-auto" if @spotify_album.images[0].present?
     .mt-2
       %h5.text-center= @spotify_album.name
-      .text-center= @spotify_album.release_date
+      %h6.text-center
+        %span.text-muted Release Date:
+        %span
+          - if @spotify_album.release_date
+            = Date.parse(@spotify_album.release_date).strftime("%B %Y") #  January 2023
   - else
     No Album Info on Spotify
