@@ -7,7 +7,7 @@ HEADERS = {
 
 class StreamLastTrack < LastTrackBase
   attr_reader :fetched_data
-  attr_accessor :url
+  attr_accessor :url, :station_name
 
   def call
     @fetched_data = read_stream
@@ -38,8 +38,9 @@ class StreamLastTrack < LastTrackBase
         end
       end
     rescue => e
-      Rollbar.error(e)
-      Rails.logger.error "stream #{url} parse failed with message: #{e.message}"
+      msg = "stream #{station_name} - parse failed with message: #{e.message}"
+      Rollbar.warning(msg, e)
+      Rails.logger.error msg
     end
 
     # Just in case we get an HTTP error

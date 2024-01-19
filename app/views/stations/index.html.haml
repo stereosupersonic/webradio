@@ -9,9 +9,11 @@
     %tr
       %th
       %th Name
+      %th Position
       %th Byuuid
       %th Homepage
       %th RadioBox
+      %th Ignore stream
       %th
       %th
 
@@ -20,9 +22,17 @@
       %tr
         %td= image_tag station.station_logo, width: 100, height: 100
         %td= station.name
+        %td= station.position
         %td= link_to station.browser_info_byuuid, station.browser_info_url, target: "_blank"
-        %td= link_to station.radiobox, station.radio_box_url, target: "_blank"
-        %td= link_to station.homepage, station.homepage, target: "_blank"
+        - if station.homepage.present?
+          %td= link_to station.homepage, station.homepage, target: "_blank"
+        -else
+          %td
+        - if station.radiobox.present?
+          %td= link_to station.radiobox, station.radio_box_url, target: "_blank"
+        -else
+          %td
+        %td= station.ignore_tracks_from_stream? ? "Yes" : "No"
         %td= link_to "Play", station, class: "btn btn-success"
         %td= link_to "Edit", edit_station_path(station), class: "btn btn-warning"
         -# %td= link_to "Destroy", station, method: :delete, data: {confirm: "Are you sure?"}
