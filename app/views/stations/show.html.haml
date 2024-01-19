@@ -18,9 +18,9 @@
 
     .row.mt-5
       .col-3
-        = turbo_frame_tag "albuminfo_station_#{@station.id}", loading: :lazy, src: station_album_infos_path(@station), data: { controller: :refresh, refresh_interval_value: 10_00 } do
+        = turbo_frame_tag "albuminfo_station_#{@station.id}", loading: :lazy, src: station_album_infos_path(@station), data: { controller: :refresh, refresh_interval_value: 30_000 } do
           Loading Album informations...
 
       .col-9
-        = turbo_frame_tag "trackinfo_station_#{@station.id}", src: station_track_infos_path(@station), data: { controller: :refresh, refresh_interval_value: 10_00 } do
+        = turbo_frame_tag "trackinfo_station_#{@station.id}", src: station_track_infos_path(@station), data: { controller: :refresh, refresh_interval_value: 10_000 } do
           Asking ChatGPT ...

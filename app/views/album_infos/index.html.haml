@@ -1,12 +1,13 @@
 = turbo_frame_tag "albuminfo_station_#{@station.id}" do
   - if @spotify_album
-    = image_tag @spotify_album.images[0]["url"], class: "img-thumbnail d-block m-auto" if @spotify_album.images[0].present?
+    - cover_url = @spotify_album.images.first&.fetch("url") if @spotify_album.images.any?
+    = image_tag cover_url, class: "img-thumbnail d-block m-auto" if cover_url.present?
     .mt-2
       %h5.text-center= @spotify_album.name
       %h6.text-center
-        %span.text-muted Release Date:
+        %span.text-muted Released:
         %span
           - if @spotify_album.release_date.present?
-            = Date.parse(@spotify_album.release_date).strftime("%B %Y") rescue  "Error" #  January 2023
+            = @spotify_album.release_date.match(/\d{4}/)&.[](0)
   - else
     No Album Info on Spotify
