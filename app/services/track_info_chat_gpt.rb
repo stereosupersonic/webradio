@@ -1,8 +1,7 @@
 # Usage:
 #  TrackInfoChatGpt.new(artist: "The Beatles", title: "Yesterday").call
-
 require "ruby/openai"
-require "JSON"
+# require "JSON"
 
 class TrackInfoChatGpt
   attr_reader :artist, :title, :client
@@ -17,7 +16,7 @@ class TrackInfoChatGpt
   def call
     return if ENV["OPENAI_ACCESS_TOKEN"].blank? || artist.blank? || title.blank?
 
-    #question = "What do you know about the song '#{title}' from '#{artist}?' can format the output to be more readable"
+    # question = "What do you know about the song '#{title}' from '#{artist}?' can format the output to be more readable"
 
     question = "Give me a  detailed informations about the song '#{title}' from the artist '#{artist}', " \
     " such as release date, album title, Band info, background"
@@ -35,8 +34,7 @@ class TrackInfoChatGpt
     )
 
     Rails.logger.info "ChatGPT response: #{response}"
-    result = response.dig("choices", 0, "message", "content")
-    #result = JSON.parse(json_response)
-    result
+    response.dig("choices", 0, "message", "content")
+    # result = JSON.parse(json_response)
   end
 end

@@ -53,7 +53,7 @@ gem "solid_cache", "~> 0.3.0"
 gem "factory_bot_rails", "~> 6.4"
 
 gem "ruby-openai", "~> 6.3"
-
+gem "rspotify", "~> 2.12"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
