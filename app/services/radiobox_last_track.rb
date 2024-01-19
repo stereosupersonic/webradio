@@ -32,14 +32,7 @@ class RadioboxLastTrack < LastTrackBase
 
     return if response.nil?
 
-    current_track = CurrentTrack.new artist: response.artist, title: response.title, response: value.to_html, played_at: Time.current, source: :radiobox
-
-    if station.change_track_info_order?
-      current_track.artist = response.title
-      current_track.title = response.artist
-    end
-
-    current_track
+     CurrentTrack.new artist: response.artist, title: response.title, response: value.to_html, played_at: Time.current, source: :radiobox
   end
 
   private
