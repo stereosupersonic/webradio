@@ -12,7 +12,10 @@ WORKDIR /rails
 ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development"
+    BUNDLE_WITHOUT="development" \
+    BUNDLER_VERSION=2.5.5 \
+    BUNDLE_RETRY=3
+
 ENV SECRET_KEY_BASE=c77ac8fa8a7b1d2b039972f1b2d266b1ac9b10890d314ef19595bc6869d73e050ad90aaee07c0d4309ca6028588a561c0bc31162bc9673c8d1dc110ba949759d
 
 # Throw-away build stage to reduce size of final image
@@ -33,6 +36,8 @@ RUN curl -sL https://github.com/nodenv/node-build/archive/master.tar.gz | tar xz
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
+RUN gem update --system && \
+    gem install bundler:$BUNDLER_VERSION
 RUN bundle install && \
     rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
     bundle exec bootsnap precompile --gemfile
