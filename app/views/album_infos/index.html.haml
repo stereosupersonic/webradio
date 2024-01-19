@@ -1,6 +1,6 @@
 = turbo_frame_tag "albuminfo_station_#{@station.id}" do
   - if @spotify_album
-    - cover_url = @spotify_album.images.first&.fetch("url") if @spotify_album.images.any?
+    - cover_url = @spotify_album.images.first&.fetch("url") if @spotify_album.images.present?
     = image_tag cover_url, class: "img-thumbnail d-block m-auto" if cover_url.present?
     .mt-2
       %h5.text-center= @spotify_album.name

@@ -16,7 +16,7 @@
         = turbo_frame_tag "current_track_#{@station.id}", loading: :lazy, src: station_current_tracks_path(@station), data: { controller: :refresh } do
           Loading Track informations...
 
-    .row.mt-5
+    .row.mt-3
       .col-3
         = turbo_frame_tag "albuminfo_station_#{@station.id}", loading: :lazy, src: station_album_infos_path(@station), data: { controller: :refresh, refresh_interval_value: 20_000 } do
           Loading Album informations...
