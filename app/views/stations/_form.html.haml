@@ -32,6 +32,9 @@
   .mb-3
     = f.label :ignore_tracks_from_stream, class: "form-label"
     = f.check_box :ignore_tracks_from_stream, class: "form-check-input"
+  .mb-3
+    = f.label :change_track_info_order, class: "form-label"
+    = f.check_box :change_track_info_order, class: "form-check-input"
 
   .mb-3.actions
     = f.submit "Save"

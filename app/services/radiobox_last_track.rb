@@ -11,11 +11,14 @@ class RadioboxLastTrack < LastTrackBase
   SELECTOR = ".playlist .tablelist-schedule tr:first td[2]".freeze
   Response = Struct.new(:artist, :title, :response, :played_at, :key)
 
-  attr_reader :fetched_data
-  attr_accessor :url
+  attr_accessor :station
+
+  attr_reader :fetched_data, :url
 
   def call
-    return if @url.blank?
+    return if station.nil?
+    return if station.radio_box_url.blank?
+    @url = station.radio_box_url
 
     value = Array(doc.css(SELECTOR))[0]
     @fetched_data = value&.text
@@ -29,7 +32,14 @@ class RadioboxLastTrack < LastTrackBase
 
     return if response.nil?
 
-    CurrentTrack.new artist: response.artist, title: response.title, response: value.to_html, played_at: Time.current, source: :radiobox
+    current_track = CurrentTrack.new artist: response.artist, title: response.title, response: value.to_html, played_at: Time.current, source: :radiobox
+
+    if station.change_track_info_order?
+      current_track.artist = response.title
+      current_track.title = response.artist
+    end
+
+    current_track
   end
 
   private

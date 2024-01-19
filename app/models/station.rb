@@ -4,6 +4,7 @@
 #
 #  id                        :bigint           not null, primary key
 #  browser_info_byuuid       :string
+#  change_track_info_order   :boolean          default(FALSE), not null
 #  country                   :string
 #  description               :text
 #  homepage                  :string

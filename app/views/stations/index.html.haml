@@ -14,6 +14,7 @@
       %th Homepage
       %th RadioBox
       %th Ignore stream
+      %th Change Artist/Track
       %th
       %th
 
@@ -33,6 +34,7 @@
         -else
           %td
         %td= station.ignore_tracks_from_stream? ? "Yes" : "No"
+        %td= station.change_track_info_order? ? "Yes" : "No"
         %td= link_to "Play", station, class: "btn btn-success"
         %td= link_to "Edit", edit_station_path(station), class: "btn btn-warning"
         -# %td= link_to "Destroy", station, method: :delete, data: {confirm: "Are you sure?"}

@@ -7,6 +7,7 @@ Station:
     logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Radio_Caroline_logo.svg/640px-Radio_Caroline_logo.svg.png
     radiobox: uk/radiocaroline
     ignore_tracks_from_stream: false
+    change_track_info_order: false
 
   - name: Absolute Radio
     position: 2
@@ -15,6 +16,7 @@ Station:
     logo_url: https://planetradio.co.uk/tesla/static/favicons/absolute/apple-touch-icon.png
     radiobox: uk/absolute1058
     ignore_tracks_from_stream: false
+    change_track_info_order: true
 
   - name: Radio X
     position: 3
@@ -23,6 +25,7 @@ Station:
     logo_url: http://www.radiox.co.uk/assets_v4r/xfm/img/favicon-196x196.png
     radiobox: uk/radiox
     ignore_tracks_from_stream: false
+    change_track_info_order: false
 
   - name: 181.FM - The Eagle (Classic)
     position: 4
@@ -31,6 +34,7 @@ Station:
     logo_url: http://i.ibb.co/42fWKB1/EAGLE.jpg
     radiobox: us/181fmclassic
     ignore_tracks_from_stream: false
+    change_track_info_order: false
 
   - name: Radiostorm - Rock 104 Classic Rock
     position: 5
@@ -39,6 +43,7 @@ Station:
     logo_url: https://radiostorm.com/wp-content/uploads/2018/01/cropped-imgpsh_fullsize2-180x180.png
     radiobox:
     ignore_tracks_from_stream: false
+    change_track_info_order: false
 
   - name: Planet Rock
     position: 6
@@ -47,6 +52,7 @@ Station:
     logo_url: https://www.radio.de/images/broadcasts/e2/d5/11524/2/c300.png
     radiobox: uk/planetrock
     ignore_tracks_from_stream: true
+    change_track_info_order: false
 
   - name: Monsters of Rock
     position: 7
@@ -55,6 +61,7 @@ Station:
     logo_url: https://static.wixstatic.com/media/94475d_0a39d2c617ca4e349bd04db918c4f98a~mv2.png/v1/fill/w_939,h_788,al_c,q_90,enc_auto/Copy%20of%20FB%20Dash%20Promo%20-%20NP%20April%206.png
     radiobox:
     ignore_tracks_from_stream: false
+    change_track_info_order: false
 
   - name: marilu
     position: 8
@@ -63,6 +70,7 @@ Station:
     logo_url: https://www.marilu.it/wp-content/uploads/2023/03/cropped-radio-marilu-plettro-180x180.png
     radiobox: it/marilu
     ignore_tracks_from_stream: false
+    change_track_info_order: false
 
   - name: Radio Bob
     position: 9
@@ -71,6 +79,7 @@ Station:
     logo_url: https://www.radio.de/images/broadcasts/cf/8d/4917/3/c300.png
     radiobox: de/radiobob
     ignore_tracks_from_stream: true
+    change_track_info_order: false
 
   - name: FluxFM
     position: 21
@@ -79,6 +88,7 @@ Station:
     logo_url: https://www.fluxfm.de/assets/favicons/apple-icon-120x120.png
     radiobox: de/fluxfm1006
     ignore_tracks_from_stream: false
+    change_track_info_order: false
 
   - name: XS Manchester
     position: 22
@@ -86,7 +96,8 @@ Station:
     browser_info_byuuid: 35ceded1-e990-4017-b5b4-2e95102a6b41
     logo_url: https://parg.co/UvIP
     radiobox: uk/xsmanchester
-    ignore_tracks_from_stream: false
+    ignore_tracks_from_stream: true
+    change_track_info_order: false
 
   - name: FM4
     position: 23
@@ -95,6 +106,7 @@ Station:
     logo_url: https://tubestatic.orf.at/mojo/1_3/storyserver//tube/fm4/images/touch-icon-iphone-retina.png
     radiobox: at/fm4
     ignore_tracks_from_stream: false
+    change_track_info_order: false
 
   - name: Bayern 1 Obberbayern
     position: 55
@@ -103,6 +115,7 @@ Station:
     logo_url: https://yt3.ggpht.com/a/AATXAJwIGRDADpvLxYotJyaLcJN-JQvQyMMiQ2jKhg=s900-c-k-c0xffffffff-no-rj-mo
     radiobox: de/bayern1
     ignore_tracks_from_stream: false
+    change_track_info_order: false
 
   - name: BR 2
     position: 66
@@ -111,3 +124,4 @@ Station:
     logo_url: https://www.radio.de/images/broadcasts/75/8a/2246/3/c300.png
     radiobox: de/bayern2
     ignore_tracks_from_stream: false
+    change_track_info_order: false

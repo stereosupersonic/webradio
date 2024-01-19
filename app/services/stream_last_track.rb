@@ -7,22 +7,30 @@ HEADERS = {
 
 class StreamLastTrack < LastTrackBase
   attr_reader :fetched_data
-  attr_accessor :url, :station_name
+  attr_accessor :station
 
   def call
+    return if station.nil?
+    return if station.url.blank? || station.ignore_tracks_from_stream?
+
     @fetched_data = read_stream
 
     response = extract_title_artist
 
     return if response.nil?
+    current_track = CurrentTrack.new artist: response.artist, title: response.title, response: @fetched_data, played_at: Time.current, source: :stream
+    if station.change_track_info_order?
+      current_track.artist = response.title
+      current_track.title = response.artist
+    end
 
-    CurrentTrack.new artist: response.artist, title: response.title, response: @fetched_data, played_at: Time.current, source: :stream
+    current_track
   end
 
   private
 
   def read_stream
-    uri = URI.parse(url)
+    uri = URI.parse(station.url)
     http = Net::HTTP.new(uri.host, uri.port)
 
     chunk_count = 0
@@ -38,7 +46,7 @@ class StreamLastTrack < LastTrackBase
         end
       end
     rescue => e
-      msg = "stream #{station_name} - parse failed with message: #{e.message}"
+      msg = "stream #{station.name} - parse failed with message: #{e.message}"
       Rollbar.warning(msg, e)
       Rails.logger.error msg
     end
