@@ -1,2 +1,2 @@
-= turbo_frame_tag "chat_gpt_#{@current_track_key}" do
-  = simple_format @chat_gpt_said
+= turbo_frame_tag "trackinfo_station_#{@station.id}" do
+  %h5= simple_format @chat_gpt_said if @chat_gpt_said

@@ -4,21 +4,19 @@ require "net/http"
 HEADERS = {
   "Icy-MetaData" => "1"
 }
-class StreamLastTrack < BaseService
-  Response = Struct.new(:artist, :title, :response, :played_at, :key)
 
+class StreamLastTrack < LastTrackBase
   attr_reader :fetched_data
   attr_accessor :url
 
   def call
     @fetched_data = read_stream
-    Rails.logger.debug "fetched_data: #{@fetched_data}"
 
     response = extract_title_artist
 
     return if response.nil?
-    key = "#{response.artist}-#{response.title}".parameterize
-    Response.new(response.artist, response.title, @fetched_data, Time.current, key)
+
+    CurrentTrack.new artist: response.artist, title: response.title, response: @fetched_data, played_at: Time.current, source: :stream
   end
 
   private
@@ -45,27 +43,5 @@ class StreamLastTrack < BaseService
 
     # Just in case we get an HTTP error
     nil
-  end
-
-  def extract_title_artist
-    return nil if fetched_data.blank?
-
-    ["-", ":"].each do |splitter|
-      artist, title = *fetched_data.split(" #{splitter} ")
-      artist = normalize(artist)
-      title = normalize(title)
-      if valid_value?(title) && valid_value?(artist)
-        return OpenStruct.new(artist: artist, title: title)
-      end
-    end
-    nil
-  end
-
-  def valid_value?(value)
-    value.presence.to_s =~ /[a-zA-Z0-9]/
-  end
-
-  def normalize(text)
-    TrackSanitizer.new(text: text).call
   end
 end
