@@ -1,6 +1,8 @@
 class TrackSanitizer < BaseService
   UNWANTED_TEXT = ["Neu:", "(Album Version)", "(Edit)"]
+
   attr_accessor :text
+
   def call
     normalize(text)
   end
@@ -11,6 +13,9 @@ class TrackSanitizer < BaseService
     text = CGI.unescapeHTML(text.to_s)
     text = fix_encoding text.encode("UTF-8", invalid: :replace, replace: "")
     remove_unwanted(text).squish.titleize
+  rescue Encoding::UndefinedConversionError => e
+    Rails.logger.error "Encoding::UndefinedConversionError: #{e.message}"
+    ""
   end
 
   def remove_unwanted(text)
@@ -18,6 +23,7 @@ class TrackSanitizer < BaseService
       .gsub(/Rock Antenne/i, "") # special rock antenne intros
       .gsub(/Rock Nonstop/i, "")
       .gsub("Nachrichten", "")
+      .gsub(/Www\.Radiocaroline\.Co\.Uk.\(.*\)/i, "")
 
     UNWANTED_TEXT.each do |unwanted|
       result.gsub! unwanted, ""
