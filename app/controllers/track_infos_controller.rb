@@ -1,14 +1,12 @@
 class TrackInfosController < ApplicationController
   def index
-    artist = params[:artist]
-    title = params[:title]
-    @current_track_key = params[:key]
-    Rails.logger.info "artist: #{artist} -title: #{title}"
+    @station = StationPresenter.new Station.find(params[:station_id])
+    @current_track = Rails.cache.read("current_track/#{@station.id}")
 
-    @chat_gpt_said = if @current_track_key.present?
-      cache_key = "v1/current_track_chat_gpt/#{@current_track_key}".parameterize
+    @chat_gpt_said = if @current_track
+      cache_key = "v1/current_track_chat_gpt/#{@current_track.key}".parameterize
       Rails.cache.fetch(cache_key) do
-        TrackInfoChatGpt.new(artist: artist, title: title).call
+        TrackInfoChatGpt.new(artist: @current_track.artist, title: @current_track.title).call
       end
     end
   end

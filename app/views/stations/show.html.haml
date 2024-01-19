@@ -2,14 +2,25 @@
   .row
     .col-2
       = link_to "Back", root_path, class: "btn btn-secondary btn-lg", data: {turbo: false}
-    .col-2
+    .col-1
       = link_to image_tag(@station.station_logo, class: "img-thumbnail", size: "50x50"), @station.homepage, target: "_blank"
-    .col-6
+    .col-4
       %h2= @station.name
-    .col-2
+    .col-3
       %audio{ controls: "controls", autoplay: "autoplay", src: @station.url }
 
 .pt-3.mt-3.mb-3.border-top
   %h1.fw-bolder
-    = turbo_frame_tag "trackinfo_station_#{@station.id}", loading: :lazy, src: station_current_tracks_path(@station, show_album_info: true), data: { controller: :trackinfo } do
-      Loading Track informations...
+    .row
+      .col-12
+        = turbo_frame_tag "current_track_#{@station.id}", loading: :lazy, src: station_current_tracks_path(@station), data: { controller: :refresh } do
+          Loading Track informations...
+
+    .row.mt-5
+      .col-3
+        = turbo_frame_tag "albuminfo_station_#{@station.id}", loading: :lazy, src: station_album_infos_path(@station), data: { controller: :refresh } do
+          Loading Album informations...
+
+      .col-9
+        = turbo_frame_tag "trackinfo_station_#{@station.id}", src: station_track_infos_path(@station), data: { controller: :refresh } do
+          Asking ChatGPT ...

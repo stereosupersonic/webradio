@@ -1,0 +1,6 @@
+= turbo_frame_tag "albuminfo_station_#{@station.id}" do
+  -if @last_fm
+    - # TODO: show default album
+    = image_tag @last_fm.album_image, class: "img-thumbnail d-block m-auto" if @last_fm.album_image.present?
+    .mt-2
+      %h5.text-center= @last_fm.album9

@@ -7,7 +7,7 @@ require "open-uri"
 
 # http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=03a888a88c3abea4963563b3f736862c&artist=cher&track=believe&format=json
 
-class RadioboxLastTrack < BaseService
+class RadioboxLastTrack < LastTrackBase
   SELECTOR = ".playlist .tablelist-schedule tr:first td[2]".freeze
   Response = Struct.new(:artist, :title, :response, :played_at, :key)
 
@@ -21,19 +21,15 @@ class RadioboxLastTrack < BaseService
     @fetched_data = value&.text
 
     if fetched_data.blank?
-      Rails.logger.error "no track for selector '#{SELECTOR}' url: #{@url}"
+      Rails.logger.error "#{self.class.name}: no track for selector '#{SELECTOR}' url: #{@url}"
       return
     end
-
-    Rails.logger.info "fetched_data: #{fetched_data}"
 
     response = extract_title_artist
 
     return if response.nil?
 
-    played_at = Time.current # TODO: use the real date
-    key = "#{response.artist}-#{response.title}".parameterize
-    Response.new(response.artist, response.title, value.to_html, played_at, key)
+    CurrentTrack.new artist: response.artist, title: response.title, response: value.to_html, played_at: Time.current, source: :radiobox
   end
 
   private
@@ -46,25 +42,5 @@ class RadioboxLastTrack < BaseService
 
   def doc
     @doc ||= ::Nokogiri::HTML(fetch_html)
-  end
-
-  def extract_title_artist
-    [" - ", " : ", ": ", "- "].each do |splitter|
-      artist, title = *fetched_data.split(splitter.to_s)
-      artist = normalize(artist)
-      title = normalize(title)
-      if valid_value?(title) && valid_value?(artist)
-        return OpenStruct.new(artist: artist, title: title)
-      end
-    end
-    nil
-  end
-
-  def valid_value?(value)
-    value.presence.to_s =~ /[a-zA-Z0-9]/
-  end
-
-  def normalize(text)
-    TrackSanitizer.new(text: text).call
   end
 end

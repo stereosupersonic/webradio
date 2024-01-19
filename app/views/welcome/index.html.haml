@@ -13,6 +13,6 @@
           %h3=link_to station.name, station #, class: "btn btn-light stretched-link"
         %td.align-middle
           %h4
-            = turbo_frame_tag "trackinfo_station_#{station.id}", loading: :lazy, src: station_current_tracks_path(station), data: { controller: :trackinfo } do
+            = turbo_frame_tag "current_track_#{station.id}", loading: :lazy, src: station_current_tracks_path(station), data: { controller: :refresh } do
               Loading Track informations...
         %td.align-middle= link_to('<i class="fa-solid fa-play"></i>'.html_safe, station, class: "btn btn-secondary btn-lg")

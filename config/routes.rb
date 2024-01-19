@@ -1,10 +1,9 @@
 Rails.application.routes.draw do
-  get "track_infos/index"
   resources :stations do
     resources :current_tracks, only: [:index]
+    resources :track_infos, only: [:index]
+    resources :album_infos, only: [:index]
   end
-
-  resources :track_infos, only: [:index]
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
