@@ -6,22 +6,14 @@ x-base: &base
     dockerfile: ./Dockerfile
     args:
       RUBY_VERSION: '3.1.4'
-  tty: true
-  restart: "${DOCKER_RESTART_POLICY:-unless-stopped}"
-  stop_grace_period: "3s"
   environment:
     - DATABASE_HOST=postgres
     - DATABASE_PORT=5432
     - DATABASE_USERNAME=postgres
-    - DATABASE_PASSWORD=postgresdb
+    - DATABASE_PASSWORD=postgres
+    - RAILS_ENV=test
     - RAILS_LOG_TO_STDOUT=true
-    - OPENAI_ACCESS_TOKEN=${OPENAI_ACCESS_TOKEN}
-    - LASTFM_API_KEY=${LASTFM_API_KEY}
-    - SPOTIFY_CLIENT_ID=${SPOTIFY_CLIENT_ID}
-    - SPOTIFY_CLIENT_SECRET=${SPOTIFY_CLIENT_SECRET}
-    - ROLLBAR_ENABLED=${ROLLBAR_ENABLED}
-    - ROLLBAR_ACCESS_TOKEN=${ROLLBAR_ACCESS_TOKEN}
-    - RAILS_ENV=${RAILS_ENV}
+
   depends_on:
     postgres:
       condition: service_healthy
@@ -33,7 +25,7 @@ services:
     ports:
       - '3000:3000'
     healthcheck:
-      test: curl --fail http://0.0.0.0:3000/up || exit 1
+      test: curl --fail http://0.0.0.0:3000/ready || exit 1
       retries: 3
       start_period: 10s
 
@@ -42,14 +34,11 @@ services:
     volumes:
       - postgres:/var/lib/postgresql/data
     environment:
-      - POSTGRES_PASSWORD=postgresdb
+      - POSTGRES_PASSWORD=postgres
     ports:
       - 5432
-    restart: "${DOCKER_RESTART_POLICY:-unless-stopped}"
-    stop_grace_period: "3s"
     healthcheck:
       test: pg_isready -U postgres -h 127.0.0.1
       interval: 5s
-
 volumes:
-  postgres: {}
+  postgres:
