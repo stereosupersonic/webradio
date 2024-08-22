@@ -1,11 +1,7 @@
-version: '2.4'
-
 x-base: &base
   build:
     context: .
     dockerfile: ./Dockerfile
-    args:
-      RUBY_VERSION: '3.1.4'
   environment:
     - DATABASE_HOST=postgres
     - DATABASE_PORT=5432
@@ -13,7 +9,6 @@ x-base: &base
     - DATABASE_PASSWORD=postgres
     - RAILS_ENV=test
     - RAILS_LOG_TO_STDOUT=true
-
   depends_on:
     postgres:
       condition: service_healthy
