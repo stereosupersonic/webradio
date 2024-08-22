@@ -91,5 +91,5 @@ group :test do
   gem "launchy" # for capybara save_and_open_page
   gem "webdrivers"
 
-  gem "simplecov", "~> 0.22.0"
+  gem "simplecov", "~> 0.22.0", require: false
 end
