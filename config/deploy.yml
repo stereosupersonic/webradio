@@ -33,6 +33,7 @@ env:
     - SPOTIFY_CLIENT_ID
     - SPOTIFY_CLIENT_SECRET
     - ROLLBAR_ACCESS_TOKEN
+
 # Use a different ssh user than root
 ssh:
   user: stereosonic
