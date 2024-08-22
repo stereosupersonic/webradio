@@ -4,7 +4,7 @@ class LastTrackBase < BaseService
   def extract_title_artist
     return nil if fetched_data.blank?
 
-    ["-", ":"].each do |splitter|
+    [ "-", ":" ].each do |splitter|
       artist, title = *fetched_data.split(" #{splitter} ")
       artist = normalize(artist)
       title = normalize(title)

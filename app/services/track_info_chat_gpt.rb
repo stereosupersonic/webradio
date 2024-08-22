@@ -27,7 +27,7 @@ class TrackInfoChatGpt
         # response_format: { type: "json_object" },
         # model: "gpt-3.5-turbo-1106",
         model: "gpt-3.5-turbo",
-        messages: [{role: "user", content: question}],
+        messages: [ { role: "user", content: question } ],
         temperature: 0.7 # what does temperature do?
 
       }

@@ -1,5 +1,5 @@
 class TrackSanitizer < BaseService
-  UNWANTED_TEXT = ["Neu:", "(Album Version)", "(Edit)"]
+  UNWANTED_TEXT = [ "Neu:", "(Album Version)", "(Edit)" ]
 
   attr_accessor :text
 

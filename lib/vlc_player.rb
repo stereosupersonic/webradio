@@ -43,12 +43,12 @@ class VlcPlayer
     @lastfm.track.search(now_playing)
 
     search_result = @lastfm.track.search(track: song.to_search_term,
-      limit: limit)["results"]["trackmatches"]["track"].compact
+                                         limit: limit)["results"]["trackmatches"]["track"].compact
     found_songs = []
 
     search_result.each do |r|
       found_songs << @lastfm.track.get_info(track: r["name"],
-        artist: r["artist"])
+                                            artist: r["artist"])
     end
 
     found_songs

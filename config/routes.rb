@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   resources :stations do
-    resources :current_tracks, only: [:index]
-    resources :track_infos, only: [:index]
-    resources :album_infos, only: [:index]
+    resources :current_tracks, only: [ :index ]
+    resources :track_infos, only: [ :index ]
+    resources :album_infos, only: [ :index ]
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
