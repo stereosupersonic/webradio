@@ -18,17 +18,14 @@ registry:
   password:
     - KAMAL_REGISTRY_PASSWORD
 
+# Inject ENV variables into containers (secrets come from .env).
+# Remember to run `kamal env push` after making changes!
 env:
+  clear:
+    DATABASE_HOST: "postgres"
   secret:
     - RAILS_MASTER_KEY
     - DATABASE_URL
-# Inject ENV variables into containers (secrets come from .env).
-# Remember to run `kamal env push` after making changes!
-# env:
-#   clear:
-#     DB_HOST: 192.168.0.2
-#   secret:
-#     - RAILS_MASTER_KEY
 
 # Use a different ssh user than root
 ssh:
