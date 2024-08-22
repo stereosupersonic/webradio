@@ -41,3 +41,5 @@
 stations.csv
 test.rb
 TODO
+
+coverage/*
