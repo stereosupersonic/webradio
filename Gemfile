@@ -63,11 +63,9 @@ group :development, :test do
 
   gem "annotate", ">= 3.2", group: :development
 
-  gem "rubocop-rails", "~> 2.23"
-  gem "rubocop-performance", "~> 1.20"
-  gem "rubocop-rspec", "~> 2.26"
-  gem "rubocop-factory_bot", "~> 2.25"
-  gem "rubocop-capybara", "~> 2.20"
+  gem "rubocop-rails-omakase", require: false
+  gem "rubocop-rspec", require: false
+  gem "rubocop-capybara", require: false
 
   gem "dotenv-rails", "~> 2.8"
 end
