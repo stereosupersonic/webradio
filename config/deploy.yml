@@ -24,10 +24,15 @@ env:
   clear:
     # using the already running postgres database: postgres:14.1-alpine
     DATABASE_HOST: 192.168.1.124
+    ROLLBAR_ENABLED: true
   secret:
     - RAILS_MASTER_KEY
     - DATABASE_URL
-
+    - OPENAI_ACCESS_TOKEN
+    - LASTFM_API_KEY
+    - SPOTIFY_CLIENT_ID
+    - SPOTIFY_CLIENT_SECRET
+    - ROLLBAR_ACCESS_TOKEN
 # Use a different ssh user than root
 ssh:
   user: stereosonic
