@@ -21,6 +21,7 @@ registry:
 env:
   secret:
     - RAILS_MASTER_KEY
+    - DATABASE_URL
 # Inject ENV variables into containers (secrets come from .env).
 # Remember to run `kamal env push` after making changes!
 # env:
@@ -32,7 +33,8 @@ env:
 # Use a different ssh user than root
 ssh:
   user: stereosonic
-  keys: [ "~/Dropbox/mice/keys/old_macbook_2020/id_ed25519" ]
+  keys:
+    - SSH_KEY
 # Configure builder setup.
 # builder:
 #   args:
