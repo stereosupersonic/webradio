@@ -59,5 +59,8 @@ module Webradio
     end
 
     config.generators.system_tests = nil
+
+    config.cache_store = :solid_cache_store
+    config.solid_cache.key_hash_stage = :ignored
   end
 end
