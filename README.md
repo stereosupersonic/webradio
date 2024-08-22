@@ -1,24 +1,20 @@
-# README
+# Webradio
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+shows my favorite webstations
 
-Things you may want to cover:
+all stations should be listed https://www.radio-browser.info/
 
-* Ruby version
+example  Radio Caroline https://www.radio-browser.info/history/9606ceae-0601-11e8-ae97-52543be04c81
 
-* System dependencies
 
-* Configuration
+## local development
 
-* Database creation
+```
+bin/setup
+bin/dev
 
-* Database initialization
+```
 
-* How to run the test suite
+## update radios streaming urls
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+bin/rails update_stations_from_browser_info

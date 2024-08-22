@@ -1,3 +1,8 @@
+inherit_from: .rubocop_todo.yml
+
+inherit_gem:
+  rubocop-rails-omakase: rubocop.yml
+
 # comes from standardrb https://github.com/testdouble/standard
 #https://github.com/testdouble/standard/blob/master/config/base.yml
 
@@ -5,12 +10,10 @@ require:
   - rubocop-rails
   - rubocop-performance
   - rubocop-rspec
-  - rubocop-factory_bot
   - rubocop-capybara
 
 AllCops:
   # Prevent RuboCop from exploding when it finds an older-than-2.4 .ruby-version
-  TargetRubyVersion: 2.6
   DisabledByDefault: true
   Exclude:
     - '**/tmp/**/*'
@@ -54,14 +57,6 @@ Layout/AccessModifierIndentation:
   Enabled: true
   EnforcedStyle: indent
   IndentationWidth: ~
-
-Layout/ArgumentAlignment:
-  Enabled: true
-  EnforcedStyle: with_fixed_indentation
-
-Layout/ArrayAlignment:
-  Enabled: true
-  EnforcedStyle: with_fixed_indentation
 
 Layout/AssignmentIndentation:
   Enabled: true
@@ -174,11 +169,6 @@ Layout/FirstArgumentIndentation:
   EnforcedStyle: consistent
   IndentationWidth: ~
 
-Layout/FirstArrayElementIndentation:
-  Enabled: true
-  EnforcedStyle: consistent
-  IndentationWidth: ~
-
 Layout/FirstHashElementIndentation:
   Enabled: true
   EnforcedStyle: consistent
@@ -285,11 +275,6 @@ Layout/SpaceAroundOperators:
   Enabled: true
   AllowForAlignment: true
 
-Layout/SpaceBeforeBlockBraces:
-  Enabled: true
-  EnforcedStyle: space
-  EnforcedStyleForEmptyBraces: space
-
 Layout/SpaceBeforeComma:
   Enabled: true
 
@@ -307,11 +292,6 @@ Layout/SpaceInLambdaLiteral:
   Enabled: true
   EnforcedStyle: require_no_space
 
-Layout/SpaceInsideArrayLiteralBrackets:
-  Enabled: true
-  EnforcedStyle: no_space
-  EnforcedStyleForEmptyBrackets: no_space
-
 Layout/SpaceInsideArrayPercentLiteral:
   Enabled: true
 
@@ -320,11 +300,6 @@ Layout/SpaceInsideBlockBraces:
   EnforcedStyle: space
   EnforcedStyleForEmptyBraces: no_space
   SpaceBeforeBlockParameters: true
-
-Layout/SpaceInsideHashLiteralBraces:
-  Enabled: true
-  EnforcedStyle: no_space
-  EnforcedStyleForEmptyBraces: no_space
 
 Layout/SpaceInsideParens:
   Enabled: true
@@ -770,10 +745,6 @@ Style/AndOr:
   Enabled: true
   EnforcedStyle: always
 
-Style/ArgumentsForwarding:
-  Enabled: true
-  AllowOnlyRestArgument: true
-
 Style/ArrayJoin:
   Enabled: true
 
@@ -850,10 +821,6 @@ Style/EmptyLambdaParameter:
 
 Style/EmptyLiteral:
   Enabled: true
-
-Style/EmptyMethod:
-  Enabled: true
-  EnforcedStyle: expanded
 
 Style/Encoding:
   Enabled: true
@@ -1116,10 +1083,6 @@ Style/StringLiterals:
   EnforcedStyle: double_quotes
   ConsistentQuotesInMultiline: false
 
-Style/StringLiteralsInInterpolation:
-  Enabled: true
-  EnforcedStyle: double_quotes
-
 Style/Strip:
   Enabled: true
 
@@ -1208,6 +1171,9 @@ RSpec/LetSetup:
 RSpec/ContextWording:
   Enabled: false
 
+RSpec/EmptyLineAfterExampleGroup:
+  Enabled: true
+
 Capybara/MatchStyle:
   Enabled: true
 
@@ -1221,16 +1187,4 @@ Capybara/SpecificFinders:
   Enabled: true
 
 Capybara/SpecificMatcher:
-  Enabled: true
-
-FactoryBot/ConsistentParenthesesStyle:
-  Enabled: true
-
-FactoryBot/FactoryNameStyle:
-  Enabled: true
-
-FactoryBot/SyntaxMethods:
-  Enabled: true
-
-RSpec/EmptyLineAfterExampleGroup:
   Enabled: true

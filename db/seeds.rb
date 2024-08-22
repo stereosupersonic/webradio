@@ -10,9 +10,9 @@
 puts "-------------------"
 puts "Seeding stations..."
 puts "-------------------"
-yaml = Rails.root.join('db', 'stations.yml')
+yaml = Rails.root.join("db", "stations.yml")
 content = ERB.new(File.read(yaml)).result(binding)
-records = YAML.load(content) || {}
+records = YAML.safe_load(content) || {}
 records.each do |model, data|
   model.constantize.insert_all(data)
 end

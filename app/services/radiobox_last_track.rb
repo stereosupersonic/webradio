@@ -1,6 +1,6 @@
 require "nokogiri"
 require "open-uri"
-
+require "net/http"
 # url = https://onlineradiobox.com/uk/absolute1058/playlist/
 # script .playlist tr.active a
 # radio_box = Radiobox.new url: "https://onlineradiobox.com/uk/absolute1058/playlist/", script: ".playlist tr.active a"
@@ -17,8 +17,9 @@ class RadioboxLastTrack < LastTrackBase
 
   def call
     return if station.nil?
-    return if station.radio_box_url.blank?
+
     @url = station.radio_box_url
+    return if @url.blank?
 
     value = Array(doc.css(SELECTOR))[0]
     @fetched_data = value&.text
@@ -32,21 +33,45 @@ class RadioboxLastTrack < LastTrackBase
 
     return if response.nil?
 
-     CurrentTrack.new artist: response.artist, title: response.title, response: value.to_html, played_at: Time.current, source: :radiobox
+    CurrentTrack.new artist: response.artist, title: response.title, response: value.to_html, played_at: Time.current, source: :radiobox
   end
 
   private
+
+  def fetch_html_new
+    parsed_url = URI.parse(@url)
+
+    begin
+      response = Net::HTTP.get_response(parsed_url)
+
+      if response.is_a?(Net::HTTPSuccess)
+        # Process the content as needed for a successful response
+        return response.body
+      elsif response.code.to_i == 404
+        msg = "#{self.class.name}: 404 Not Found: The requested resource was not found - url: #{@url} station: #{station}"
+        # You can choose to handle 404 errors in a specific way here
+      else
+        msg = "#{self.class.name}: #{response.code} - #{response.message} - #{@url} station: #{station}"
+        # Handle other errors as needed
+      end
+    rescue => e
+      msg = "#{self.class.name}: Error: #{e.message} - #{@url} station: #{station}"
+    end
+    Rollbar.warning msg
+    Rails.logger.error msg
+    nil
+  end
 
   def fetch_html
     # better way to do this is to use a proxy
 
     URI.open @url # rewrite this
   rescue OpenURI::HTTPError => e
-    if e.message == '404 Not Found'
-       msg = "#{self.class.name}: 404 Not Found for url: #{@url}"
-       Rollbar.warning msg
-       Rails.logger.error msg
-       return nil
+    if e.message == "404 Not Found"
+      msg = "#{self.class.name}: 404 Not Found for url: #{@url} station: #{station.name}"
+      Rollbar.warning msg
+      Rails.logger.error msg
+      return nil
     end
     raise e
   end

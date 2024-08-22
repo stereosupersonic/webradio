@@ -1,5 +1,5 @@
 class TrackSanitizer < BaseService
-  UNWANTED_TEXT = ["Neu:", "(Album Version)", "(Edit)"]
+  UNWANTED_TEXT = [ "Neu:", "(Album Version)", "(Edit)" ]
 
   attr_accessor :text
 
@@ -11,13 +11,42 @@ class TrackSanitizer < BaseService
 
   def normalize(text)
     text = CGI.unescapeHTML(text.to_s)
-    text = fix_encoding text.encode("UTF-8", invalid: :replace, replace: "")
+    text = force_convert_to_utf8 text
     remove_unwanted(text).squish.titleize
-  rescue Encoding::UndefinedConversionError => e
-    msg = "#{self.class.name}: Encoding::UndefinedConversionError => '#{text.force_encoding('UTF-8')}' #{e.message}"
-    Rollbar.error(msg, e)
-    Rails.logger.error msg
-    ""
+  end
+
+  def force_convert_to_utf8(text)
+    begin
+      if text.encoding.to_s == "UTF-8" && text.valid_encoding?
+        return text
+      end
+
+      str = text.dup.force_encoding("binary").encode(
+        "utf-8",
+        invalid: :replace,
+        undef: :replace,
+        replace: "?"
+      )
+
+      if !str.valid_encoding? || str.encoding.to_s != "UTF-8"
+        raise Encoding::UndefinedConversionError
+      end
+    rescue Encoding::UndefinedConversionError
+      str = chars.map { |c|
+        begin
+          c.encode("UTF-8", invalid: :replace, undef: :replace)
+        rescue
+          "?".encode("UTF-8")
+        end
+      }.join
+
+      if !str.valid_encoding?
+        Rollbar.error(e, encoding: text.encoding, text_utf8: text.force_encoding("UTF-8"))
+        Rails.logger.error e
+      end
+    end
+
+    str
   end
 
   def remove_unwanted(text)

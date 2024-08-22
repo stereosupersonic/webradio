@@ -3,7 +3,7 @@ source "https://rubygems.org"
 # ruby file: ".ruby-version" this does not work with docker
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.1.2"
+gem "rails", "~> 7.2.0"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
@@ -12,7 +12,7 @@ gem "sprockets-rails"
 gem "pg", "~> 1.1"
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", ">= 5.0"
+gem "puma", ">= 6.0"
 
 # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
 gem "jsbundling-rails"
@@ -49,12 +49,13 @@ gem "bootsnap", require: false
 
 gem "haml-rails", "~> 2.1"
 
-gem "solid_cache", "~> 0.3.0"
+gem "solid_cache"
 gem "factory_bot_rails", "~> 6.4"
 
 gem "ruby-openai", "~> 6.3"
 gem "rspotify", "~> 2.12"
 gem "rollbar", "~> 3.5"
+gem "brakeman", "~> 6.1"
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "pry-nav", "~> 1.0"
@@ -63,11 +64,9 @@ group :development, :test do
 
   gem "annotate", ">= 3.2", group: :development
 
-  gem "rubocop-rails", "~> 2.23"
-  gem "rubocop-performance", "~> 1.20"
-  gem "rubocop-rspec", "~> 2.26"
-  gem "rubocop-factory_bot", "~> 2.25"
-  gem "rubocop-capybara", "~> 2.20"
+  gem "rubocop-rails-omakase", require: false
+  gem "rubocop-rspec", require: false
+  gem "rubocop-capybara", require: false
 
   gem "dotenv-rails", "~> 2.8"
 end
@@ -82,7 +81,7 @@ group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
 
-  gem "error_highlight", ">= 0.4.0", platforms: [:ruby]
+  gem "error_highlight", ">= 0.4.0", platforms: [ :ruby ]
 end
 
 group :test do
@@ -91,4 +90,6 @@ group :test do
   gem "capybara"
   gem "launchy" # for capybara save_and_open_page
   gem "webdrivers"
+
+  gem "simplecov", "~> 0.22.0", require: false
 end

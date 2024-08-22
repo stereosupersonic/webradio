@@ -40,3 +40,6 @@
 /node_modules
 stations.csv
 test.rb
+TODO
+
+coverage/*
