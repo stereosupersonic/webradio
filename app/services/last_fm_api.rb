@@ -62,10 +62,18 @@ class LastFmApi
 
   def fetch_data
     # Rails.logger.info url
-    raw_response = URI.open(url) { |f| f.read }
-    json_repose = JSON.parse(raw_response)
-    # Rails.logger.info json_repose
-    @response = json_repose["track"] || {}
+    begin
+      raw_response = URI.open(url) { |f| f.read }
+      json_response = JSON.parse(raw_response)
+      # Rails.logger.info json_response
+      @response = json_response["track"] || {}
+    rescue OpenURI::HTTPError => e
+      Rails.logger.error "Failed to fetch data: #{e.message}"
+      @response = {}
+    rescue JSON::ParserError => e
+      Rails.logger.error "Failed to parse JSON: #{e.message}"
+      @response = {}
+    end
     @response
   end
 

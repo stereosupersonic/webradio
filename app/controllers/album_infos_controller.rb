@@ -7,7 +7,7 @@ class AlbumInfosController < ApplicationController
       Rails.cache.fetch("current_track/#{@current_track.key}", expires_in: 24.hours) do
         # LastFmApi.new(artist: @current_track.artist, title: @current_track.title).call
         spotify_track = SpotifyTrack.new(artist: @current_track.artist, title: @current_track.title).call
-        spotify_track.album
+        spotify_track&.album
       end
     end
   end
