@@ -24,24 +24,28 @@
 require "rails_helper"
 
 RSpec.describe Station, type: :model do
-  it 'is valid with valid attributes' do
-    station = build(:station)
-    expect(station).to be_valid
+  it { should validate_presence_of(:url) }
+  it { should validate_presence_of(:name) }
+
+  describe ".ordered" do
+    it "returns stations ordered by position" do
+      station1 = Station.create!(name: "Station 1", url: "http://example.com/1", position: 2)
+      station2 = Station.create!(name: "Station 2", url: "http://example.com/2", position: 1)
+      expect(Station.ordered).to eq([station2, station1])
+    end
   end
 
-  it 'is not valid without a url' do
-    station = build(:station, url: nil)
-    expect(station).not_to be_valid
-  end
+  describe ".create_by_browser_info" do
+    it "creates a station with browser info" do
+      byuuid = "some-uuid"
+      station = Station.create_by_browser_info(byuuid)
+      expect(station).to be_persisted
+      expect(station.browser_info_byuuid).to eq(byuuid)
+    end
 
-  it 'is not valid without a name' do
-    station = build(:station, name: nil)
-    expect(station).not_to be_valid
-  end
-
-  it 'returns the correct logo url' do
-    station = build(:station, logo_url: 'logo.png')
-    expect(station.logo_url).to eq('logo.png')
+    it "returns nil if byuuid is blank" do
+      expect(Station.create_by_browser_info(nil)).to be_nil
+    end
   end
 end
 require 'rails_helper'
