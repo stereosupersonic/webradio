@@ -11,5 +11,8 @@ RSpec.describe CurrentTrack, type: :model do
     expect(current_track.to_s).to eq('Artist - Title')
   end
 
-  # Add more tests for other methods
+  it 'generates a key based on artist and title' do
+    current_track = CurrentTrack.new(artist: 'Artist', title: 'Title')
+    expect(current_track.key).to eq('artist-title')
+  end
 end

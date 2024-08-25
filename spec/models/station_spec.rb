@@ -23,8 +23,6 @@
 #
 require "rails_helper"
 
-require 'rails_helper'
-
 RSpec.describe Station, type: :model do
   it 'is valid with valid attributes' do
     station = build(:station)
@@ -36,5 +34,13 @@ RSpec.describe Station, type: :model do
     expect(station).not_to be_valid
   end
 
-  # Add more tests for other validations and methods
+  it 'is not valid without a name' do
+    station = build(:station, name: nil)
+    expect(station).not_to be_valid
+  end
+
+  it 'returns the correct logo url' do
+    station = build(:station, logo_url: 'logo.png')
+    expect(station.logo_url).to eq('logo.png')
+  end
 end
