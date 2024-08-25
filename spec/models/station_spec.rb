@@ -26,3 +26,18 @@ require "rails_helper"
 RSpec.describe Station, type: :model do
   pending "add some examples to (or delete) #{__FILE__}"
 end
+require 'rails_helper'
+
+RSpec.describe Station, type: :model do
+  it 'is valid with valid attributes' do
+    station = build(:station)
+    expect(station).to be_valid
+  end
+
+  it 'is not valid without a url' do
+    station = build(:station, url: nil)
+    expect(station).not_to be_valid
+  end
+
+  # Add more tests for other validations and methods
+end
