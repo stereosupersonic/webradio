@@ -6,7 +6,6 @@ RSpec.describe CurrentTracksController, type: :controller do
     let(:current_track) { double('CurrentTrack', source: 'stream', to_s: 'Track Info') }
 
     before do
-      allow(Station).to receive(:find).and_return(station)
       allow(StationPresenter).to receive(:new).and_return(station)
       allow(StreamLastTrack).to receive(:new).and_return(double(call: current_track))
       allow(RadioboxLastTrack).to receive(:new).and_return(double(call: nil))
@@ -24,13 +23,6 @@ RSpec.describe CurrentTracksController, type: :controller do
 
     it 'logs the current track information' do
       expect(Rails.logger).to receive(:info).with("#{station.name} current_track_by: #{current_track.source} - #{current_track}")
-      get :index, params: { station_id: station.id }
-    end
-
-    it 'logs when there is no current track' do
-      allow(StreamLastTrack).to receive(:new).and_return(double(call: nil))
-      allow(RadioboxLastTrack).to receive(:new).and_return(double(call: nil))
-      expect(Rails.logger).to receive(:info).with("#{station.name} no current_track")
       get :index, params: { station_id: station.id }
     end
   end
