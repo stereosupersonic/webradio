@@ -5,3 +5,14 @@ task update_stations_from_browser_info: :environment do
     station.save!
   end
 end
+
+task reimport: :environment do
+  deleted = Station.delete_all
+  puts "deleted stations #{deleted}"
+  Rake::Task["db:seed"].invoke
+
+  Rake::Task["update_stations_from_browser_info"].invoke
+  Station.order(:position).each do |station|
+    puts "Station: #{station.name}"
+  end
+end
