@@ -12,4 +12,7 @@ task reimport: :environment do
   Rake::Task["db:seed"].invoke
 
   Rake::Task["update_stations_from_browser_info"].invoke
+  Station.order(:position).each do |station|
+    puts "Station: #{station.name}"
+  end
 end

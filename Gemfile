@@ -91,6 +91,6 @@ group :test do
   gem "capybara"
   gem "launchy" # for capybara save_and_open_page
   gem "webdrivers"
-  gem 'shoulda-matchers', '~> 6.0'
+  gem "shoulda-matchers", "~> 6.0"
   gem "simplecov", "~> 0.22.0", require: false
 end

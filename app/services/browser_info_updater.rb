@@ -2,13 +2,14 @@ require "net/http"
 require "json"
 
 class BrowserInfoUpdater < BaseService
+  BROWSER_INFO_URL = "http://91.132.145.114"
   attr_accessor :station
 
   def call
     return if station&.browser_info_byuuid.blank?
     Rails.logger.info "Updating station #{station.name} from browser info"
 
-    url = URI.parse("http://91.132.145.114/json/stations/byuuid/#{station.browser_info_byuuid}")
+    url = URI.parse("#{BROWSER_INFO_URL}/json/stations/byuuid/#{station.browser_info_byuuid}")
     response = Net::HTTP.get_response(url)
 
     if response.is_a?(Net::HTTPSuccess)
