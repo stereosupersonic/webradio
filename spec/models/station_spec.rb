@@ -31,7 +31,7 @@ RSpec.describe Station, type: :model do
     it "returns stations ordered by position" do
       station1 = Station.create!(name: "Station 1", url: "http://example.com/1", position: 2)
       station2 = Station.create!(name: "Station 2", url: "http://example.com/2", position: 1)
-      expect(Station.ordered).to eq([station2, station1])
+      expect(Station.ordered).to eq([ station2, station1 ])
     end
   end
 

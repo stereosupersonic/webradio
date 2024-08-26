@@ -24,7 +24,7 @@ class BrowserInfoUpdater < BaseService
       Rails.logger.error "Failed to fetch data: #{response.message}"
       false
     end
-  rescue StandardError => e
+  rescue => e
     Rails.logger.error "Station: #{station.name} - Failed to fetch data: #{e.message}"
   end
 end
