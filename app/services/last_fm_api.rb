@@ -73,7 +73,9 @@ class LastFmApi
     rescue JSON::ParserError => e
       Rails.logger.error "Failed to parse JSON: #{e.message}"
       @response = {}
-    end
+    rescue StandardError => e
+      Rails.logger.error "An error occurred while fetching data: #{e.message}"
+      @response = {}
     @response
   end
 

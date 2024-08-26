@@ -9,13 +9,23 @@ class SpotifyTrack
 
   def call
     return nil if artist.blank? || title.blank? || ENV["SPOTIFY_CLIENT_ID"].blank? || ENV["SPOTIFY_CLIENT_SECRET"].blank?
-    auth
-    RSpotify::Track.search("#{artist} - #{title}").first
+    if auth
+      RSpotify::Track.search("#{artist} - #{title}").first
+    else
+      Rails.logger.error "Spotify authentication failed"
+      nil
+    end
   end
 
   private
 
   def auth
-    RSpotify.authenticate(ENV["SPOTIFY_CLIENT_ID"], ENV["SPOTIFY_CLIENT_SECRET"])
+    begin
+      RSpotify.authenticate(ENV["SPOTIFY_CLIENT_ID"], ENV["SPOTIFY_CLIENT_SECRET"])
+      true
+    rescue StandardError => e
+      Rails.logger.error "Spotify authentication error: #{e.message}"
+      false
+    end
   end
 end
