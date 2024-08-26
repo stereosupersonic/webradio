@@ -27,7 +27,6 @@ env:
     ROLLBAR_ENABLED: true
   secret:
     - RAILS_MASTER_KEY
-    - DATABASE_URL
     - OPENAI_ACCESS_TOKEN
     - LASTFM_API_KEY
     - SPOTIFY_CLIENT_ID

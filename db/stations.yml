@@ -54,21 +54,21 @@ Station:
     ignore_tracks_from_stream: true
     change_track_info_order: false
 
-  - name: Monsters of Rock
-    position: 7
-    url: http://ice55.securenetsystems.net/DASH14
-    browser_info_byuuid: 57f59a0d-3a6e-11ea-8dd7-52543be04c81
-    logo_url: https://static.wixstatic.com/media/94475d_0a39d2c617ca4e349bd04db918c4f98a~mv2.png/v1/fill/w_939,h_788,al_c,q_90,enc_auto/Copy%20of%20FB%20Dash%20Promo%20-%20NP%20April%206.png
-    radiobox:
-    ignore_tracks_from_stream: false
-    change_track_info_order: false
-
   - name: marilu
-    position: 8
+    position: 7
     url: http://wma01.fluidstream.net/marilu
     browser_info_byuuid: 9624d45b-0601-11e8-ae97-52543be04c81
     logo_url: https://www.marilu.it/wp-content/uploads/2023/03/cropped-radio-marilu-plettro-180x180.png
     radiobox: it/marilu
+    ignore_tracks_from_stream: false
+    change_track_info_order: false
+
+  - name: Boogaloo Radio
+    position: 8
+    url: https://streams.radio.co/sb88c742f0/listen
+    browser_info_byuuid: df185514-161b-476d-a913-d2c2927033a8
+    logo_url: https://boogalooradio.com/favicon.ico
+    radiobox: uk/boogaloo
     ignore_tracks_from_stream: false
     change_track_info_order: false
 

@@ -18,3 +18,18 @@ bin/dev
 ## update radios streaming urls
 
 bin/rails update_stations_from_browser_info
+
+
+## Kamal
+
+https://kamal-deploy.org/docs/commands/view-all-commands/
+
+### logs
+
+kamal app logs -f
+
+### infos
+
+kamal audit # Show the latest commands to have been run on each server.
+
+kamal details -q # Shows details of all your containers
