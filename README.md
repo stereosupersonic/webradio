@@ -17,8 +17,11 @@ bin/dev
 
 ## update radios streaming urls
 
-bin/rails update_stations_from_browser_info
+kamal app exec "bin/rails update_stations_from_browser_info"
 
+## reimport all stations
+
+kamal app exec "bin/rails reimport"
 
 ## Kamal
 
