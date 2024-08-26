@@ -23,7 +23,11 @@
 #
 FactoryBot.define do
   factory :station do
-    name { "MyString" }
-    url { "MyText" }
+    name { "Radio Caroline" }
+    position { 1 }
+    url { "http://78.129.202.200:8040" }
+    browser_info_byuuid { "9606ceae-0601-11e8-ae97-52543be04c81" }
+    logo_url { "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Radio_Caroline_logo.svg/640px-Radio_Caroline_logo.svg.png" }
+    radiobox { "uk/radiocaroline" }
   end
 end

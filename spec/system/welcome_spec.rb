@@ -1,9 +1,11 @@
 require "capybara_helper"
 
 describe "welcome", type: :system do
-  xit "shows the tranding tracks of this year" do
+  it "shows the tranding tracks of this year" do
+    create :station, name: "Radio Caroline"
+
     visit "/"
 
-    expect(page).to have_content("Welcome")
+    expect(page).to have_content("Radio Caroline")
   end
 end

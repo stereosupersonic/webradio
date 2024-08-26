@@ -56,6 +56,7 @@ gem "ruby-openai", "~> 6.3"
 gem "rspotify", "~> 2.12"
 gem "rollbar", "~> 3.5"
 gem "brakeman", "~> 6.1"
+gem "kamal", "~> 1.8"
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "pry-nav", "~> 1.0"
@@ -90,8 +91,6 @@ group :test do
   gem "capybara"
   gem "launchy" # for capybara save_and_open_page
   gem "webdrivers"
-
+  gem 'shoulda-matchers', '~> 6.0'
   gem "simplecov", "~> 0.22.0", require: false
 end
-
-gem "kamal", "~> 1.8"
