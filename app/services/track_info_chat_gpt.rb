@@ -23,8 +23,10 @@ class TrackInfoChatGpt
      "i need some informations about the song '#{title}' from the artist '#{artist}', " \
     " such as Band info, "\
     " release date, " \
+    " highest chart Position, " \
+    " Recording Studio " \
     " album title,  " \
-    " background and " \
+    " background, " \
     " the meaning of the lyrics " \
     " and 3-4 lines of the lyrics" \
     " as bullet points. "
