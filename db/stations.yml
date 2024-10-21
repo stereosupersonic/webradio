@@ -63,12 +63,11 @@ Station:
     ignore_tracks_from_stream: false
     change_track_info_order: false
 
-  - name: Boogaloo Radio
+  - name: The Zone
     position: 8
-    url: https://streams.radio.co/sb88c742f0/listen
-    browser_info_byuuid: df185514-161b-476d-a913-d2c2927033a8
-    logo_url: https://boogalooradio.com/favicon.ico
-    radiobox: uk/boogaloo
+    url: https://redirect.jpbgdigital.com/CJZN.m3u8?np=1&player_type=%E2%80%A6c-4195-8657-fe1a081fb529&member_id=null&starttime=1608617530
+    browser_info_byuuid: 8b473feb-2b37-4dd4-aee5-ed16ce0e2eef
+    radiobox: ca/cjzn
     ignore_tracks_from_stream: false
     change_track_info_order: false
 
