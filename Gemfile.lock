@@ -147,8 +147,8 @@ GEM
       activesupport (>= 5.1)
       haml (>= 4.0.6)
       railties (>= 5.1)
-    haml_lint (0.52.0)
-      haml (>= 4.0)
+    haml_lint (0.59.0)
+      haml (>= 5.0)
       parallel (~> 1.10)
       rainbow
       rubocop (>= 1.0)
@@ -473,7 +473,7 @@ DEPENDENCIES
   dotenv-rails (~> 3.1)
   factory_bot_rails (~> 6.4)
   haml-rails (~> 2.1)
-  haml_lint (~> 0.52.0)
+  haml_lint (~> 0.59.0)
   jsbundling-rails
   kamal (~> 2.0)
   launchy
