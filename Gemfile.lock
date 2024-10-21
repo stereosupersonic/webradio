@@ -472,7 +472,7 @@ DEPENDENCIES
   capybara
   cssbundling-rails
   dotenv-rails (~> 3.1)
-  error_highlight (>= 0.4.0)
+  error_highlight (~> 0.6.0)
   factory_bot_rails (~> 6.4)
   haml-rails (~> 2.1)
   haml_lint (~> 0.52.0)
