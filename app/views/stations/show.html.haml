@@ -4,7 +4,8 @@
       = link_to root_path, class: "btn btn-secondary btn-lg", data: { turbo: false } do
         %i.fas.fa-arrow-left.fa-2x
     .col-1
-      = link_to image_tag(@station.station_logo, class: "img-thumbnail", size: "50x50"), @station.homepage, target: "_blank"
+      - if @station.station_logo.present?
+        = link_to image_tag(@station.station_logo, class: "img-thumbnail", size: "50x50"), @station.homepage, target: "_blank"
     .col-4
       %h2= @station.name
     .col-3

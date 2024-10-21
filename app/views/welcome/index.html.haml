@@ -8,7 +8,7 @@
   %tbody
     - @stations.each do |station|
       %tr
-        %td.align-middle= link_to image_tag(station.station_logo, size: "80x80", class: "img-fluid"), station
+        %td.align-middle= link_to(image_tag(station.station_logo, size: "80x80", class: "img-fluid"), station) if station.station_logo.present?
         %td.align-middle
           %h3=link_to station.name, station #, class: "btn btn-light stretched-link"
         %td.align-middle
