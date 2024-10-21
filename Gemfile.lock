@@ -377,7 +377,7 @@ GEM
       rubocop-rails
     rubocop-rspec (3.1.0)
       rubocop (~> 1.61)
-    ruby-openai (6.5.0)
+    ruby-openai (7.3.1)
       event_stream_parser (>= 0.3.0, < 2.0.0)
       faraday (>= 1)
       faraday-multipart (>= 1)
@@ -489,7 +489,7 @@ DEPENDENCIES
   rubocop-capybara
   rubocop-rails-omakase
   rubocop-rspec
-  ruby-openai (~> 6.3)
+  ruby-openai (~> 7.3)
   shoulda-matchers (~> 6.0)
   simplecov (~> 0.22.0)
   solid_cable
