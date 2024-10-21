@@ -21,7 +21,7 @@
   %tbody
     - @stations.each do |station|
       %tr
-        %td= station.station_logo.present? : image_tag(station.station_logo, width: 100, height: 100) : "No Logo"
+        %td= station.station_logo.present? ? image_tag(station.station_logo, width: 100, height: 100) : "No Logo"
         %td= station.name
         %td= station.position
         %td= link_to station.browser_info_byuuid, station.browser_info_url, target: "_blank"
