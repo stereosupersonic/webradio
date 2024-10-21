@@ -26,6 +26,7 @@ class TrackInfoChatGpt
     " album title,  " \
     " background and " \
     " the meaning of the lyrics " \
+    " and 3-4 lines of the lyrics" \
     " as bullet points. "
 
     Rails.logger.info "Aske ChatGPT: #{question}"
