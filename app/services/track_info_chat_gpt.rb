@@ -18,8 +18,15 @@ class TrackInfoChatGpt
 
     # question = "What do you know about the song '#{title}' from '#{artist}?' can format the output to be more readable"
 
-    question = "Give me a  detailed informations about the song '#{title}' from the artist '#{artist}', " \
-    " such as release date, album title, Band info, background"
+    question =
+     "AS A MUSIC NERD " \
+     "i need some informations about the song '#{title}' from the artist '#{artist}', " \
+    " such as Band info, "\
+    " release date, " \
+    " album title,  " \
+    " background and " \
+    " the meaning of this track " \
+    " as bullet points. "
 
     Rails.logger.info "Aske ChatGPT: #{question}"
     response = client.chat(
