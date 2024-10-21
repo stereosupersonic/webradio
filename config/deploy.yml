@@ -6,7 +6,20 @@ image: stereosupersonic/webradio
 
 # Deploy to these servers.
 servers:
-  - 192.168.1.124 # poseidon
+  web:
+    - 192.168.1.124 # poseidon
+  # job:
+  #   hosts:
+  #     - 192.168.0.1
+  #   cmd: bin/jobs
+
+# Enable SSL auto certification via Let's Encrypt and allow for multiple apps on a single web server.
+# Remove this section when using multiple web servers and ensure you terminate SSL at your load balancer.
+#
+# Note: If using Cloudflare, set encryption mode in SSL/TLS setting to "Full" to enable CF-to-app encryption.
+proxy:
+  ssl: true
+  host: radio.deimel.de
 
 # Credentials for your image host.
 registry:
@@ -18,13 +31,8 @@ registry:
   password:
     - KAMAL_REGISTRY_PASSWORD
 
-# Inject ENV variables into containers (secrets come from .env).
-# Remember to run `kamal env push` after making changes!
+# Inject ENV variables into containers (secrets come from .kamal/secrets).
 env:
-  clear:
-    # using the already running postgres database: postgres:14.1-alpine
-    DATABASE_HOST: 192.168.1.124
-    ROLLBAR_ENABLED: true
   secret:
     - RAILS_MASTER_KEY
     - OPENAI_ACCESS_TOKEN
@@ -32,80 +40,61 @@ env:
     - SPOTIFY_CLIENT_ID
     - SPOTIFY_CLIENT_SECRET
     - ROLLBAR_ACCESS_TOKEN
+  clear:
+    # Run the Solid Queue Supervisor inside the web server's Puma process to do jobs.
+    # When you start using multiple servers, you should split out job processing to a dedicated machine.
+    SOLID_QUEUE_IN_PUMA: true
 
-# Use a different ssh user than root
-ssh:
-  user: stereosonic
-  keys:
-    - SSH_KEY
-# Configure builder setup.
-# builder:
-#   args:
-#     RUBY_VERSION: 3.2.0
-#   secrets:
-#     - GITHUB_TOKEN
-#   remote:
-#     arch: amd64
-#     host: ssh://app@192.168.0.1
+    # Set number of processes dedicated to Solid Queue (default: 1)
+    # JOB_CONCURRENCY: 3
 
+    # Set number of cores available to the application on each server (default: 1).
+    # WEB_CONCURRENCY: 2
 
-# accessories:
-#   postgres:
-#     image: postgres:15
-#     roles:
-#       - web
-#     env:
-#       clear:
-#         POSTGRES_USER: "postgres"
-#         POSTGRES_DB: "webradio_production"
-#       secret:
-#         - POSTGRES_PASSWORD
-#     files:
-#       - config/init.sql:/docker-entrypoint-initdb.d/setup.sql
-#     directories:
-#       - data:/var/lib/postgresql/data
+    # Match this to any external database server to configure Active Record correctly
+    # Use exampler-db for a db accessory server on same machine via local kamal docker network.
+    DATABASE_HOST: 192.168.1.124
+    ROLLBAR_ENABLED: true
 
+    # Log everything from Rails
+    # RAILS_LOG_LEVEL: debug
 
-#   redis:
-#     image: redis:7.0
-#     host: 192.168.0.2
-#     port: 6379
-#     directories:
-#       - data:/data
+# Aliases are triggered with "bin/kamal <alias>". You can overwrite arguments on invocation:
+# "bin/kamal logs -r job" will tail logs from the first server in the job section.
+aliases:
+  console: app exec --interactive --reuse "bin/rails console"
+  shell: app exec --interactive --reuse "bash"
+  logs: app logs -f
+  dbc: app exec --interactive --reuse "bin/rails dbconsole"
 
-# Configure custom arguments for Traefik. Be sure to reboot traefik when you modify it.
-# traefik:
-#   args:
-#     accesslog: true
-#     accesslog.format: json
-
-# Configure a custom healthcheck (default is /up on port 3000)
-# healthcheck:
-#   path: /healthz
-#   port: 4000
+# Use a persistent storage volume for sqlite database files and local Active Storage files.
+# Recommended to change this to a mounted volume path that is backed up off server.
+volumes:
+  - "exampler_storage:/rails/storage"
 
 # Bridge fingerprinted assets, like JS and CSS, between versions to avoid
 # hitting 404 on in-flight requests. Combines all files from new and old
 # version inside the asset_path.
-#
-# If your app is using the Sprockets gem, ensure it sets `config.assets.manifest`.
-# See https://github.com/basecamp/kamal/issues/626 for details
-#
-# asset_path: /rails/public/assets
+asset_path: /rails/public/assets
 
-# Configure rolling deploys by setting a wait time between batches of restarts.
-# boot:
-#   limit: 10 # Can also specify as a percentage of total hosts, such as "25%"
-#   wait: 2
+# Configure the image builder.
+builder:
+  arch: amd64
 
-# Configure the role used to determine the primary_host. This host takes
-# deploy locks, runs health checks during the deploy, and follow logs, etc.
-#
-# Caution: there's no support for role renaming yet, so be careful to cleanup
-#          the previous role on the deployed hosts.
-# primary_role: web
+  # # Build image via remote server (useful for faster amd64 builds on arm64 computers)
+  # remote: ssh://docker@docker-builder-server
+  #
+  # # Pass arguments and secrets to the Docker build process
+  # args:
+  #   RUBY_VERSION: 3.2.5
+  # secrets:
+  #   - GITHUB_TOKEN
+  #   - RAILS_MASTER_KEY
 
-# Controls if we abort when see a role with no hosts. Disabling this may be
-# useful for more complex deploy configurations.
-#
-# allow_empty_roles: false
+# Use a different ssh user than root
+# shttps://kamal-deploy.org/docs/configuration/ssh/
+ssh:
+  user: stereosonic
+  keys:
+    - SSH_KEY
+
