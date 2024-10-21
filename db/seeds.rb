@@ -9,7 +9,7 @@ defaults = {
    logo_url:                  "",
    radiobox:                  "",
    ignore_tracks_from_stream: false,
-   change_track_info_order:   false,
+   change_track_info_order:   false
 }
 yaml = Rails.root.join("db", "stations.yml")
 content = ERB.new(File.read(yaml)).result(binding)
