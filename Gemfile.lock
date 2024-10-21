@@ -116,7 +116,6 @@ GEM
       railties (>= 6.1)
     drb (2.2.1)
     ed25519 (1.3.0)
-    error_highlight (0.6.0)
     erubi (1.13.0)
     et-orbi (1.2.11)
       tzinfo
@@ -472,7 +471,6 @@ DEPENDENCIES
   capybara
   cssbundling-rails
   dotenv-rails (~> 3.1)
-  error_highlight (~> 0.6.0)
   factory_bot_rails (~> 6.4)
   haml-rails (~> 2.1)
   haml_lint (~> 0.52.0)
