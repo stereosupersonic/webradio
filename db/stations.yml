@@ -71,8 +71,15 @@ Station:
     ignore_tracks_from_stream: false
     change_track_info_order: false
 
-  - name: Radio Bob
+  - name: WIMZ 103.5 Knoxville
     position: 9
+    browser_info_byuuid: 9647740b-0601-11e8-ae97-52543be04c81
+    radiobox: us/wimz
+    ignore_tracks_from_stream: false
+    change_track_info_order: false
+
+  - name: Radio Bob
+    position: 10
     url: http://regiocast.streamabc.net/regc-radiobobnational5043365-mp3-192-2943705?sABC=659r451r%230%232qqpnss01895rqr0s8oq129o03s183o0%23zrqvncynlre&aw_0_1st.playerid=mediaplayer&amsparams=playerid:mediaplayer;skey:1704871198
     browser_info_byuuid: 92556f58-20d3-44ae-8faa-322ce5f256c0
     logo_url: https://www.radio.de/images/broadcasts/cf/8d/4917/3/c300.png
