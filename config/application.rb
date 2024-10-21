@@ -41,7 +41,7 @@ module Webradio
     # config.i18n.default_locale = :de
     # Load dotenv only in development or test environment
     if [ "development", "test" ].include? ENV["RAILS_ENV"]
-      Dotenv::Railtie.load
+      Dotenv::Rails.load
     end
 
     config.generators do |g|
