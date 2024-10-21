@@ -44,3 +44,4 @@ TODO
 
 coverage/*
 .aider*
+.kamal/secrets
