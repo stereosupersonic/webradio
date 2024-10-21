@@ -1,13 +1,42 @@
 name: CI
+
 on:
-  push:
-    branches:
-      - master
   pull_request:
-    branches:
-      - master
+  push:
+    branches: [ master ]
 
 jobs:
+  scan_ruby:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+
+      - name: Scan for common Rails security vulnerabilities using static analysis
+        run: bin/brakeman --no-pager
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+
+      - name: Lint code for consistent style
+        run: bin/rubocop -f github
+
   docker:
     timeout-minutes: 10
     runs-on: ubuntu-latest
@@ -31,12 +60,6 @@ jobs:
         docker stats --no-stream
         docker compose -f docker-compose.test.yml exec -T app bin/rails db:create --trace
         docker compose -f docker-compose.test.yml exec -T app bin/rails db:test:prepare --trace
-
-    - name: Run rubocop
-      run: docker compose -f docker-compose.test.yml exec -T app bundle exec rubocop -f github
-
-    - name: brakeman - scan for common Rails security vulnerabilities using static analysis
-      run: docker compose -f docker-compose.test.yml exec -T app bin/brakeman --no-pager
 
     - name: Run tests
       run: |

@@ -21,7 +21,7 @@ Bundler.require(*Rails.groups)
 module Webradio
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.2
+    config.load_defaults 8.0
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
@@ -41,7 +41,7 @@ module Webradio
     # config.i18n.default_locale = :de
     # Load dotenv only in development or test environment
     if [ "development", "test" ].include? ENV["RAILS_ENV"]
-      Dotenv::Railtie.load
+      Dotenv::Rails.load
     end
 
     config.generators do |g|
@@ -50,12 +50,12 @@ module Webradio
       g.system_tests = nil
       g.template_engine :haml
       g.test_framework :rspec,
-        fixtures: true,
-        view_specs: false,
-        helper_specs: false,
-        routing_specs: false,
+        fixtures:         true,
+        view_specs:       false,
+        helper_specs:     false,
+        routing_specs:    false,
         controller_specs: false,
-        request_specs: false
+        request_specs:    false
     end
 
     config.generators.system_tests = nil
