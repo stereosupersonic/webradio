@@ -1,6 +1,6 @@
 class StationPresenter < ApplicationPresenter
   def station_logo
-   o.logo_url
+    o.logo_url
   end
 
   def radio_box_url

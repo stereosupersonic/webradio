@@ -24,7 +24,7 @@ class TrackSanitizer < BaseService
       str = text.dup.force_encoding("binary").encode(
         "utf-8",
         invalid: :replace,
-        undef: :replace,
+        undef:   :replace,
         replace: "?"
       )
 
