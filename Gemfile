@@ -78,7 +78,7 @@ end
 
 group :test do
   # Adds support for Capybara system testing and selenium driver [
-  gem "rspec-rails", "~> 7.0"
+  gem "rspec-rails", "~> 7.1"
   gem "capybara"
   gem "launchy" # for capybara save_and_open_page
   gem "webdrivers"
