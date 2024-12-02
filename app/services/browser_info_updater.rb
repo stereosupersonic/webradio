@@ -7,6 +7,7 @@ class BrowserInfoUpdater < BaseService
 
   def call
     return if station&.browser_info_byuuid.blank?
+    return if station&.locked?
     Rails.logger.info "Updating station #{station.name} from browser info"
 
     url = URI.parse("#{BROWSER_INFO_URL}/json/stations/byuuid/#{station.browser_info_byuuid}")

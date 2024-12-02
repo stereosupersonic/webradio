@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_08_26_164204) do
+ActiveRecord::Schema[8.0].define(version: 2024_12_02_101831) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -39,6 +39,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_08_26_164204) do
     t.string "radiobox"
     t.boolean "ignore_tracks_from_stream", default: false, null: false
     t.boolean "change_track_info_order", default: false, null: false
+    t.boolean "locked", default: false, null: false
     t.index ["position"], name: "index_stations_on_position"
   end
 end

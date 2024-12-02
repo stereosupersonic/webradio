@@ -63,6 +63,7 @@ class StationsController < ApplicationController
       :position,
       :homepage,
       :ignore_tracks_from_stream,
-      :change_track_info_order)
+      :change_track_info_order,
+      :locked)
   end
 end
