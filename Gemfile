@@ -44,7 +44,7 @@ gem "thruster", require: false
 gem "haml-rails", "~> 2.1"
 gem "factory_bot_rails", "~> 6.4"
 
-gem "ruby-openai", "~> 6.3"
+gem "ruby-openai", "~> 7.3"
 gem "rspotify", "~> 2.12"
 gem "rollbar", "~> 3.5"
 
