@@ -52,7 +52,7 @@ group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "pry-nav", "~> 1.0"
   gem "rubocop", "~> 1.59"
-  gem "haml_lint", "~> 0.52.0"
+  gem "haml_lint", "~> 0.59.0"
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", require: false
