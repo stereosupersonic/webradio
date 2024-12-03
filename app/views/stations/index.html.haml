@@ -17,6 +17,7 @@
       %th Change Artist/Track
       %th
       %th
+      %th
 
   %tbody
     - @stations.each do |station|
@@ -37,7 +38,7 @@
         %td= station.change_track_info_order? ? "Yes" : "No"
         %td= link_to "Play", station, class: "btn btn-success"
         %td= link_to "Edit", edit_station_path(station), class: "btn btn-warning"
-        -# %td= link_to "Destroy", station, method: :delete, data: {confirm: "Are you sure?"}
+        %td= button_to "Destroy", station, method: :delete,class: "btn btn-danger",  data: {confirm: "Are you sure?"}
 
 %br
 

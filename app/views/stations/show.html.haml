@@ -9,7 +9,7 @@
     .col-4
       %h2= @station.name
     .col-3
-      %audio{ controls: "controls", autoplay: "autoplay", src: @station.url }
+      = render "audio_player", url: station_stream_path(@station, format: :mp3)
 
 .pt-3.mt-3.mb-3.border-top
   %h1.fw-bolder
