@@ -167,7 +167,7 @@ GEM
     json (2.8.2)
     jwt (2.9.3)
       base64
-    kamal (2.3.0)
+    kamal (2.4.0)
       activesupport (>= 7.0)
       base64 (~> 0.2)
       bcrypt_pbkdf (~> 1.0)
@@ -477,7 +477,7 @@ DEPENDENCIES
   haml-rails (~> 2.1)
   haml_lint (~> 0.52.0)
   jsbundling-rails
-  kamal (~> 2.0)
+  kamal (~> 2.4)
   launchy
   pg (~> 1.1)
   propshaft
