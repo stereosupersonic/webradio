@@ -93,7 +93,7 @@ builder:
   #   - RAILS_MASTER_KEY
 
 # Use a different ssh user than root
-# shttps://kamal-deploy.org/docs/configuration/ssh/
+# https://kamal-deploy.org/docs/configuration/ssh/
 ssh:
   user: stereosonic
   keys:
