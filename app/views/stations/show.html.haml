@@ -9,7 +9,11 @@
     .col-4
       %h2= @station.name
     .col-3
-      = render "audio_player", url: station_stream_path(@station, format: :mp3)
+      - if true # works when it runs without ssl
+        = render "audio_player", url: station.url
+      - else
+        - # experimental for running none ssl urls on ssl sites
+        = render "audio_player", url: station_stream_path(@station, format: :mp3)
 
 .pt-3.mt-3.mb-3.border-top
   %h1.fw-bolder

@@ -7,7 +7,7 @@ image: stereosupersonic/webradio
 # Deploy to these servers.
 servers:
   web:
-    - 192.168.1.124 # poseidon
+    - 192.168.1.128 # webradio
   # job:
   #   hosts:
   #     - 192.168.0.1
@@ -18,8 +18,8 @@ servers:
 #
 # Note: If using Cloudflare, set encryption mode in SSL/TLS setting to "Full" to enable CF-to-app encryption.
 proxy:
-  ssl: true
-  host: radio.deimel.de
+  ssl: false
+  host: 192.168.1.128
 
 # Credentials for your image host.
 registry:
@@ -53,8 +53,8 @@ env:
 
     # Match this to any external database server to configure Active Record correctly
     # Use exampler-db for a db accessory server on same machine via local kamal docker network.
-    DATABASE_HOST: 192.168.1.124
-    ROLLBAR_ENABLED: true
+    DATABASE_HOST: webradio-postgres
+    ROLLBAR_ENABLED: false
 
     # Log everything from Rails
     # RAILS_LOG_LEVEL: debug
@@ -71,7 +71,7 @@ aliases:
 # Use a persistent storage volume for sqlite database files and local Active Storage files.
 # Recommended to change this to a mounted volume path that is backed up off server.
 volumes:
-  - "exampler_storage:/rails/storage"
+  - "webradio_storage:/rails/storage"
 
 # Bridge fingerprinted assets, like JS and CSS, between versions to avoid
 # hitting 404 on in-flight requests. Combines all files from new and old
@@ -81,7 +81,6 @@ asset_path: /rails/public/assets
 # Configure the image builder.
 builder:
   arch: arm64
-
 
   # # Build image via remote server (useful for faster amd64 builds on arm64 computers)
   # remote: ssh://docker@docker-builder-server
@@ -99,3 +98,17 @@ ssh:
   user: stereosonic
   keys:
     - SSH_KEY
+
+accessories:
+  postgres:
+    image: postgres:17
+    port: 127.0.0.1:5432:5432
+    host: 192.168.1.128
+    env:
+      clear:
+        POSTGRES_USER: postgres
+        POSTGRES_DB: webradio_production
+      secret:
+        - POSTGRES_PASSWORD
+    directories:
+      - data:/var/lib/postgresql/data
