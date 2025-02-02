@@ -23,8 +23,6 @@ class TrackInfoChatGpt
      "i need some informations about the song '#{title}' from the artist '#{artist}', " \
     " such as Band info, "\
     " release date, " \
-    " highest chart Position, " \
-    " Recording Studio " \
     " album title,  " \
     " background, " \
     " the meaning of the lyrics " \
@@ -35,11 +33,16 @@ class TrackInfoChatGpt
     response = client.chat(
       parameters: {
         # response_format: { type: "json_object" },
-        # model: "gpt-3.5-turbo-1106",
-        model:       "gpt-3.5-turbo",
+        #model: "gpt-3.5-turbo-1106",
+        model:       "gpt-4o-mini",
         messages:    [ { role: "user", content: question } ],
-        temperature: 0.7 # what does temperature do?
-
+        temperature: 0.3
+          # Die temperature bei einem ChatGPT-API-Call bestimmt, wie kreativ oder deterministisch die Antworten sind.
+          # Niedrige Werte (z. B. 0.1 – 0.3) → Antworten sind präziser, vorhersehbarer und wiederholbar.
+          # Hohe Werte (z. B. 0.7 – 1.5) → Antworten werden kreativer, zufälliger und abwechslungsre icher.
+          # Falls du exakte und konsistente Antworten brauchst (z. B. für technische oder wissenschaftliche Anwendungen), solltest du die Temperatur ni edrig halten.
+          # Wenn du kreativen Output möchtest (z. B. für Storytelling oder Brainstorming), kann eine höhere Temperatur  si nnvoll sein.
+          # Ein typischer Standardwert ist 0.7 – ein guter Mix aus Kreativität und Konsistenz.
       }
     )
 
