@@ -47,6 +47,7 @@ gem "factory_bot_rails", "~> 6.4"
 gem "ruby-openai", "~> 7.3"
 gem "rspotify", "~> 2.12"
 gem "rollbar", "~> 3.5"
+gem "redcarpet", "~> 3.6" # Markdown rendering
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
