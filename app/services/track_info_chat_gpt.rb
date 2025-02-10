@@ -40,7 +40,7 @@ class TrackInfoChatGpt
         # response_format: { type: "json_object" },
         # model: "gpt-3.5-turbo-1106",
         model:       MODEL,
-        messages:    [{ role: "user", content: question }],
+        messages:    [ { role: "user", content: question } ],
         temperature: 0.3
         # Die temperature bei einem ChatGPT-API-Call bestimmt, wie kreativ oder deterministisch die Antworten sind.
         # Niedrige Werte (z. B. 0.1 – 0.3) → Antworten sind präziser, vorhersehbarer und wiederholbar.
