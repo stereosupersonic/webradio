@@ -4,7 +4,7 @@ require "ruby/openai"
 # require "JSON"
 
 class TrackInfoChatGpt
-  MODEL = "gpt-4o" # OpenAI::Client.new.models.list
+  MODEL = "gpt-4o".freeze # OpenAI::Client.new.models.list
 
   attr_reader :artist, :title, :client
 
@@ -21,17 +21,17 @@ class TrackInfoChatGpt
     # question = "What do you know about the song '#{title}' from '#{artist}?' can format the output to be more readable"
 
     question =
-     "AS A MUSIC NERD " \
-     "i need some informations about the song '#{title}' from the artist '#{artist}', " \
-    " such as Band info, "\
-    " release date, " \
-    " album title,  " \
-    " background, " \
-    " the meaning of the lyrics " \
-    " and 3-4 lines of the lyrics" \
-    " as bullet points. " \
-    " if you don't know the song, then write me that you don't know it! " \
-    " output format should be pure text."\
+      "AS A MUSIC NERD " \
+      "i need some informations about the song '#{title}' from the artist '#{artist}',  " \
+      "such as Band info,  " \
+      "release date,  " \
+      "album title,   " \
+      "background,  " \
+      "the meaning of the lyrics  " \
+      "and 3-4 lines of the lyrics " \
+      "as bullet points.  " \
+      "if you don't know the song, then write me that you don't know it!  " \
+      "output format should be pure text." \
 
     Rails.logger.info "Aske ChatGPT: #{question}"
 
@@ -40,7 +40,7 @@ class TrackInfoChatGpt
         # response_format: { type: "json_object" },
         # model: "gpt-3.5-turbo-1106",
         model:       MODEL,
-        messages:    [ { role: "user", content: question } ],
+        messages:    [{ role: "user", content: question }],
         temperature: 0.3
         # Die temperature bei einem ChatGPT-API-Call bestimmt, wie kreativ oder deterministisch die Antworten sind.
         # Niedrige Werte (z. B. 0.1 – 0.3) → Antworten sind präziser, vorhersehbarer und wiederholbar.
