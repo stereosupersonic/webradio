@@ -1,3 +1,5 @@
+require "ostruct"
+
 class LastTrackBase < BaseService
   protected
 
