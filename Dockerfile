@@ -36,7 +36,6 @@ RUN apt-get update -qq && \
     libpq-dev \
     node-gyp \
     pkg-config \
-    vim \
     python-is-python3 && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
