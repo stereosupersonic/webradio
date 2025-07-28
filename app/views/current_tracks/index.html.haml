@@ -1,4 +1,4 @@
-= turbo_frame_tag "current_track_#{@station&.id}" do
+= turbo_frame_tag "current_track_#{@station&.id || '001' }" do
   - if @current_track
     = "#{@current_track.artist} - #{@current_track.title}"
   - else

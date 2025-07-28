@@ -10,7 +10,7 @@ class CurrentTracksController < ApplicationController
 
       Rails.cache.write("current_track/#{@station.id}", @current_track) if @current_track
     else
-      @station = OpenStruct.new(id: params[:station_id], name: "Station not found")
+      @station = nil
       @current_track = nil
       Rails.logger.error "Station not found with id: #{params[:station_id]}"
     end
