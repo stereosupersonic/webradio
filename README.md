@@ -15,6 +15,10 @@ bin/dev
 
 ```
 
+## deploy
+
+kamal deploy
+
 ## update radios streaming urls
 
 kamal app exec "bin/rails update_stations_from_browser_info"
