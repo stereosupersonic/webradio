@@ -27,6 +27,8 @@ class RadioboxLastTrack < LastTrackBase
     if fetched_data.blank?
       Rails.logger.error "#{self.class.name}: no track for selector '#{SELECTOR}' url: #{@url}"
       return
+    else
+      Rails.logger.info "station: #{station.name} - Fetched track info: #{fetched_data.inspect} from radiobox"
     end
 
     response = extract_title_artist
