@@ -63,7 +63,11 @@ class StreamLastTrack < LastTrackBase
 
         patterns.each do |pattern|
           if buffer =~ pattern
-            return $1.force_encoding("UTF-8").scrub.strip
+            # Extract the track info from the buffer
+            buffered_track = $1.force_encoding("UTF-8").scrub.strip
+            Rails.logger.info "Fetched track info: #{buffered_track.inspect} from stream"
+
+            return buffered_track
           end
         end
 
@@ -77,7 +81,7 @@ class StreamLastTrack < LastTrackBase
     nil
   rescue => e
     msg = "#{self.class.name}: stream #{station.name} - stream read failed: #{e.message}"
-    Rollbar.warning(msg, e)
+    # Rollbar.warning(msg, e)
     Rails.logger.warn msg
     nil
   end
@@ -103,6 +107,7 @@ class StreamLastTrack < LastTrackBase
 
         # Try different possible JSON fields for current track
         track_info = extract_track_from_json(data)
+        Rails.logger.info "Fetched track info: #{track_info.inspect} from json_stat"
         return track_info if track_info
       end
     end
@@ -110,13 +115,12 @@ class StreamLastTrack < LastTrackBase
     nil
   rescue JSON::ParserError => e
     msg = "#{self.class.name}: stream #{station.name} - JSON parse failed: #{e.message}"
-    Rollbar.warning(msg, e)
+    # Rollbar.warning(msg, e)
     Rails.logger.warn msg
-      puts msg
     nil
   rescue => e
     msg = "#{self.class.name}: stream #{station.name} - JSON stats read failed: #{e.message}"
-    Rollbar.warning(msg, e)
+    # Rollbar.warning(msg, e)
     Rails.logger.warn msg
     nil
   end

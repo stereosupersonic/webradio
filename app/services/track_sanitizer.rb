@@ -41,7 +41,7 @@ class TrackSanitizer < BaseService
       }.join
 
       if !str.valid_encoding?
-        Rollbar.error(e, encoding: text.encoding, text_utf8: text.force_encoding("UTF-8"))
+        # Rollbar.error(e, encoding: text.encoding, text_utf8: text.force_encoding("UTF-8"))
         Rails.logger.error e
       end
     end
