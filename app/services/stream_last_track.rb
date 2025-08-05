@@ -13,15 +13,25 @@ class StreamLastTrack < LastTrackBase
     return if station.nil?
     return if station.url.blank? || station.ignore_tracks_from_stream?
 
-    @fetched_data = read_stream
+    # @fetched_data = read_stream.presence || read_json_stats
+    @fetched_data = read_json_stats
+
+    puts @fetched_data
+    return if @fetched_data.blank?
 
     response = extract_title_artist
-
     return if response.nil?
-    current_track = CurrentTrack.new artist: response.artist, title: response.title, response: @fetched_data, played_at: Time.current, source: :stream
+
+    current_track = CurrentTrack.new(
+      artist: response.artist,
+      title: response.title,
+      response: @fetched_data,
+      played_at: Time.current,
+      source: :stream
+    )
+
     if station.change_track_info_order?
-      current_track.artist = response.title
-      current_track.title = response.artist
+      current_track.artist, current_track.title = current_track.title, current_track.artist
     end
 
     current_track
@@ -31,27 +41,123 @@ class StreamLastTrack < LastTrackBase
 
   def read_stream
     uri = URI.parse(station.url)
-    http = Net::HTTP.new(uri.host, uri.port)
 
-    chunk_count = 0
-    chunk_limit = 20 # Limit chunks to prevent lockups
-    begin
+    Net::HTTP.start(uri.host, uri.port,
+                    use_ssl: uri.scheme == "https",
+                    read_timeout: 10,
+                    open_timeout: 5) do |http|
+      chunk_count = 0
+      chunk_limit = 50
+      buffer = ""
+
       http.get(uri.path, HEADERS) do |chunk|
         chunk_count += 1
-        # Rails.logger.info "chunk: #{chunk} #{chunk_count}"
-        if chunk =~ /StreamTitle='(.+?)';/
-          return $1
-        elsif chunk_count > chunk_limit
-          return nil
+        buffer += chunk
+
+        # Try multiple patterns for different Shoutcast versions
+        patterns = [
+          /StreamTitle='([^']*?)';/m,
+          /StreamTitle="([^"]*?)";/m,
+          /icy-title:\s*(.+?)$/m
+        ]
+
+        patterns.each do |pattern|
+          if buffer =~ pattern
+            return $1.force_encoding("UTF-8").scrub.strip
+          end
         end
+
+        break if chunk_count > chunk_limit
+
+        # Keep buffer manageable
+        buffer = buffer.last(2048) if buffer.length > 4096
       end
-    rescue => e
-      msg = "#{self.class.name}: stream #{station.name} - parse failed with message: #{e.message}"
-      Rollbar.warning(msg, e)
-      Rails.logger.error msg
     end
 
-    # Just in case we get an HTTP error
+    nil
+  rescue => e
+    msg = "#{self.class.name}: stream #{station.name} - stream read failed: #{e.message}"
+    Rollbar.warning(msg, e)
+    Rails.logger.warn msg
+    nil
+  end
+
+  def read_json_stats
+    uri = URI.parse(station.url)
+    stats_uri = URI::HTTP.build(
+      scheme: uri.scheme,
+      host: uri.host,
+      port: uri.port,
+      path: "/statistics",
+      query: "json=1"
+    )
+
+    Net::HTTP.start(stats_uri.host, stats_uri.port,
+                    use_ssl: stats_uri.scheme == "https",
+                    read_timeout: 10,
+                    open_timeout: 5) do |http|
+      response = http.get(stats_uri.request_uri)
+
+      if response.code == "200"
+        data = JSON.parse(response.body)
+
+        # Try different possible JSON fields for current track
+        track_info = extract_track_from_json(data)
+        return track_info if track_info
+      end
+    end
+
+    nil
+  rescue JSON::ParserError => e
+    msg = "#{self.class.name}: stream #{station.name} - JSON parse failed: #{e.message}"
+    Rollbar.warning(msg, e)
+    Rails.logger.warn msg
+      puts msg
+    nil
+  rescue => e
+    msg = "#{self.class.name}: stream #{station.name} - JSON stats read failed: #{e.message}"
+    Rollbar.warning(msg, e)
+    Rails.logger.warn msg
+    nil
+  end
+
+  def extract_track_from_json(data)
+    # Common JSON field names for current track in Shoutcast/Icecast
+    possible_fields = [
+      "songtitle",     # Shoutcast v2
+      "title",         # Generic
+      "song",          # Some implementations
+      "current_song",  # Custom implementations
+      "now_playing",   # Icecast
+      "track",         # Generic
+      "yp_currently_playing" # SHOUTcast DNAS
+    ]
+
+    # Handle nested JSON structures
+    if data.is_a?(Hash)
+      # Try direct fields first
+      possible_fields.each do |field|
+        value = data[field] || data[field.upcase] || data[field.downcase]
+        return value.to_s.strip if value && !value.to_s.strip.empty?
+      end
+
+      # Try nested structures
+      [ "streams", "stream", "data", "stats" ].each do |parent|
+        if data[parent].is_a?(Hash)
+          possible_fields.each do |field|
+            value = data[parent][field]
+            return value.to_s.strip if value && !value.to_s.strip.empty?
+          end
+        elsif data[parent].is_a?(Array) && data[parent].first.is_a?(Hash)
+          # Handle array of streams
+          possible_fields.each do |field|
+            value = data[parent].first[field]
+            return value.to_s.strip if value && !value.to_s.strip.empty?
+          end
+        end
+      end
+    end
+
     nil
   end
 end
