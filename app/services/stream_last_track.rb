@@ -12,11 +12,18 @@ class StreamLastTrack < LastTrackBase
   def call
     return if station.nil?
     return if station.url.blank? || station.ignore_tracks_from_stream?
+    source = :unknown
 
-    # @fetched_data = read_stream.presence || read_json_stats
-    @fetched_data = read_json_stats
+    @fetched_data = read_stream.presence
+    if @fetched_data.present?
+      source = :stream
+    else
+      @fetched_data = read_json_stats.presence
+      if @fetched_data.present?
+        source = :json_stats
+      end
+    end
 
-    puts @fetched_data
     return if @fetched_data.blank?
 
     response = extract_title_artist
@@ -27,7 +34,7 @@ class StreamLastTrack < LastTrackBase
       title: response.title,
       response: @fetched_data,
       played_at: Time.current,
-      source: :stream
+      source: source
     )
 
     if station.change_track_info_order?
@@ -65,7 +72,7 @@ class StreamLastTrack < LastTrackBase
           if buffer =~ pattern
             # Extract the track info from the buffer
             buffered_track = $1.force_encoding("UTF-8").scrub.strip
-            Rails.logger.info "Fetched track info: #{buffered_track.inspect} from stream"
+            Rails.logger.info "station: #{station.name} - Fetched track info: #{buffered_track.inspect} from stream"
 
             return buffered_track
           end
@@ -107,8 +114,9 @@ class StreamLastTrack < LastTrackBase
 
         # Try different possible JSON fields for current track
         track_info = extract_track_from_json(data)
-        Rails.logger.info "Fetched track info: #{track_info.inspect} from json_stat"
-        return track_info if track_info
+        Rails.logger.info "station: #{station.name} - Fetched track info: #{track_info.inspect} from json_stat"
+        track_info = track_info.split("by").reverse.join(" - ").strip if track_info.present? && track_info.include?("by")
+        return track_info.presence
       end
     end
 
