@@ -115,7 +115,6 @@ class StreamLastTrack < LastTrackBase
         # Try different possible JSON fields for current track
         track_info = extract_track_from_json(data)
 
-        track_info = track_info.split("by").reverse.join(" - ").strip if track_info.present? && track_info.include?("by")
         Rails.logger.info "station: #{station.name} - Fetched track info: #{track_info.inspect} from json_stat"
         return track_info.presence
       end
