@@ -86,3 +86,5 @@ group :test do
   gem "shoulda-matchers", "~> 6.0"
   gem "simplecov", "~> 0.22.0", require: false
 end
+
+gem "lograge", "~> 0.14.0"

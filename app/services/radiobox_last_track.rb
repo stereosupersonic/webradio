@@ -17,9 +17,9 @@ class RadioboxLastTrack < LastTrackBase
 
   def call
     return if station.nil?
+    return if station.radiobox.blank?
 
     @url = station.radio_box_url
-    return if @url.blank?
 
     value = Array(doc.css(SELECTOR))[0]
     @fetched_data = value&.text
