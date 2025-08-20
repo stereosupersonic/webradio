@@ -495,7 +495,7 @@ DEPENDENCIES
   haml-rails (~> 2.1)
   haml_lint (~> 0.52.0)
   jsbundling-rails
-  kamal (~> 2.0)
+  kamal (~> 2.4)
   launchy
   lograge (~> 0.14.0)
   pg (~> 1.1)
