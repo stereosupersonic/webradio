@@ -19,7 +19,7 @@ class TrackInfoChatGpt
     # question = "What do you know about the song '#{title}' from '#{artist}?' can format the output to be more readable"
 
     question =
-      "AS A MUSIC NERD " \
+      "AS A MUSIC LOVER" \
       "i need some informations about the song '#{title}' from the artist '#{artist}',  " \
       "such as Band info,  " \
       "release date,  " \
@@ -28,8 +28,8 @@ class TrackInfoChatGpt
       "the meaning of the lyrics  " \
       "and 3-4 lines of the lyrics " \
       "as bullet points.  " \
-      "if you don't know the song, then write me that you don't know it!  " \
-      "output format should be pure text." \
+      "if you don't know the song, then write me that you don't know it! but give some infos about the Band.  " \
+      "IMPORTANT: response format should be markdown text." \
 
     Rails.logger.info "Aske ChatGPT: #{question}"
 
