@@ -4,14 +4,12 @@ require "ruby/openai"
 # require "JSON"
 
 class TrackInfoChatGpt
-  MODEL = "gpt-4o".freeze # OpenAI::Client.new.models.list
-
   attr_reader :artist, :title, :client, :model
 
   def initialize(artist:, title:)
     @artist = artist
     @title = title
-    @model = ENV.fetch("CHAT_GPT_MODEL", MODEL)
+    @model = Rails.configuration.chat_gpt_model
     @client = OpenAI::Client.new
   end
 
@@ -39,8 +37,8 @@ class TrackInfoChatGpt
       parameters: {
         # response_format: { type: "json_object" },
         model: model,
-        messages:    [ { role: "user", content: question } ],
-        temperature: 0.3
+        messages:    [ { role: "user", content: question } ]
+        # temperature: 0.3
         # Die temperature bei einem ChatGPT-API-Call bestimmt, wie kreativ oder deterministisch die Antworten sind.
         # Niedrige Werte (z. B. 0.1 – 0.3) → Antworten sind präziser, vorhersehbarer und wiederholbar.
         # Hohe Werte (z. B. 0.7 – 1.5) → Antworten werden kreativer, zufälliger und abwechslungsre icher.

@@ -59,5 +59,6 @@ module Webradio
     end
 
     config.generators.system_tests = nil
+    config.chat_gpt_model = ENV.fetch("CHAT_GPT_MODEL", "gpt-4o")
   end
 end

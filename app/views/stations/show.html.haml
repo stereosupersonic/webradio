@@ -29,4 +29,4 @@
 
     .col-9
       = turbo_frame_tag "trackinfo_station_#{@station.id}", src: station_track_infos_path(@station), data: { controller: :refresh, refresh_interval_value: 15_000 } do
-        = "Asking ChatGPT #{TrackInfoChatGpt::MODEL} ..."
+        = "Asking ChatGPT #{Rails.configuration.chat_gpt_model} ..."
