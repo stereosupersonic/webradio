@@ -30,7 +30,8 @@ class StationsController < ApplicationController
 
   def update
     respond_to do |format|
-      if BrowserInfoUpdater.new(station: @station).call && @station.update(station_params)
+      if @station.update(station_params)
+        BrowserInfoUpdater.new(station: @station).call
         format.html { redirect_to station_url(@station), notice: "Station was successfully updated." }
       else
         format.html { render :edit, status: :unprocessable_entity }
