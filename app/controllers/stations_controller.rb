@@ -2,7 +2,7 @@ class StationsController < ApplicationController
   before_action :set_station, only: %i[show edit update destroy]
 
   def index
-    @stations = StationPresenter.wrap Station.all
+    @stations = StationPresenter.wrap Station.ordered
   end
 
   def show
