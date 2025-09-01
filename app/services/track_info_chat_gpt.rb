@@ -21,15 +21,15 @@ class TrackInfoChatGpt
     question =
       "AS A MUSIC LOVER" \
       "i need some informations about the song '#{title}' from the artist '#{artist}',  " \
-      "such as Band info,  " \
+      "such as Band info (country, genre, members, founding year),  " \
       "release date,  " \
       "album title,   " \
       "background,  " \
       "the meaning of the lyrics  " \
       "and 3-4 lines of the lyrics " \
-      "as bullet points.  " \
+      "as bullet points. without the headers but a new line between each point " \
       "if you don't know the song, then write me that you don't know it! but give some infos about the Band.  " \
-      "IMPORTANT: response format should be markdown text." \
+      "IMPORTANT: response format should be plain text." \
 
     Rails.logger.info "Aske ChatGPT: #{question}"
 
