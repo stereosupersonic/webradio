@@ -21,7 +21,7 @@ class StationsController < ApplicationController
     BrowserInfoUpdater.new(station: @station).call
     respond_to do |format|
       if @station.save
-        format.html { redirect_to station_url(@station), notice: "Station was successfully created." }
+        format.html { redirect_to stations_url, notice: "Station was successfully created." }
       else
         format.html { render :new, status: :unprocessable_entity }
       end
