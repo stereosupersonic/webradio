@@ -88,4 +88,9 @@ Rails.application.configure do
   #
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+
+ config.action_controller.permitted_cross_domain_origins = [
+  "http://192.168.1.128",
+  "https://192.168.1.128"
+ ]
 end

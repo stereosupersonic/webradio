@@ -6,12 +6,12 @@ require "ruby/openai"
 class TrackInfoChatGpt
   MODEL = "gpt-4o".freeze # OpenAI::Client.new.models.list
 
-  attr_reader :artist, :title, :client
+  attr_reader :artist, :title, :client, :model
 
   def initialize(artist:, title:)
     @artist = artist
     @title = title
-
+    @model = ENV.fetch("CHAT_GPT_MODEL", MODEL)
     @client = OpenAI::Client.new
   end
 
@@ -38,8 +38,7 @@ class TrackInfoChatGpt
     response = client.chat(
       parameters: {
         # response_format: { type: "json_object" },
-        # model: "gpt-3.5-turbo-1106",
-        model:       MODEL,
+        model: model,
         messages:    [ { role: "user", content: question } ],
         temperature: 0.3
         # Die temperature bei einem ChatGPT-API-Call bestimmt, wie kreativ oder deterministisch die Antworten sind.
@@ -51,7 +50,7 @@ class TrackInfoChatGpt
       }
     )
 
-    Rails.logger.info "ChatGPT response: #{response}"
+    Rails.logger.info "ChatGPT #{model} - response: #{response}"
     response.dig("choices", 0, "message", "content")
     # result = JSON.parse(json_response)
   end
