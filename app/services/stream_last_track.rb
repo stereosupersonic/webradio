@@ -32,6 +32,7 @@ class StreamLastTrack < LastTrackBase
     current_track = CurrentTrack.new(
       artist: response.artist,
       title: response.title,
+      response: @fetched_data,
       played_at: Time.current,
       source: source
     )
@@ -44,10 +45,6 @@ class StreamLastTrack < LastTrackBase
   end
 
   private
-
-  def normalize_steam_text(text)
-    text.force_encoding("UTF-8").scrub.strip.to_s.gsub(". - ","").strip.sub(/~.*$/, "").strip
-  end
 
   def read_stream
     uri = URI.parse(station.url)
@@ -74,8 +71,8 @@ class StreamLastTrack < LastTrackBase
         patterns.each do |pattern|
           if buffer =~ pattern
             # Extract the track info from the buffer
-            buffered_track = normalize_steam_text($1)
-            Rails.logger.info "station: #{station.name} - raw: #{$1} Fetched track info: #{buffered_track.inspect} from stream"
+            buffered_track = $1.force_encoding("UTF-8").scrub.strip
+            Rails.logger.info "station: #{station.name} - Fetched track info: #{buffered_track.inspect} from stream"
 
             return buffered_track
           end

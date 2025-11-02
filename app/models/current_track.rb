@@ -1,7 +1,7 @@
 class CurrentTrack
   include ActiveModel::Model
 
-  attr_accessor :artist, :title, :played_at, :source
+  attr_accessor :artist, :title, :response, :played_at, :source
 
   def to_s
     "#{artist} - #{title}"
