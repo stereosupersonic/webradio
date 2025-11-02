@@ -16,14 +16,4 @@ class SpotifyTrack
       nil
     end
   end
-
-  private
-
-  def auth
-    RSpotify.authenticate(ENV["SPOTIFY_CLIENT_ID"], ENV["SPOTIFY_CLIENT_SECRET"])
-    true
-  rescue => e
-    Rails.logger.error "Spotify authentication error: #{e.message}"
-    false
-  end
 end
