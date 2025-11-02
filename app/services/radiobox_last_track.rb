@@ -9,6 +9,7 @@ require "net/http"
 
 class RadioboxLastTrack < LastTrackBase
   SELECTOR = ".playlist .tablelist-schedule tr:first td[2]".freeze
+  SELECTOR2 = ".tablelist-schedule td.track_history_item".freeze
   Response = Struct.new(:artist, :title, :response, :played_at, :key)
 
   attr_accessor :station
@@ -20,9 +21,7 @@ class RadioboxLastTrack < LastTrackBase
     return if station.radiobox.blank?
 
     @url = station.radio_box_url
-
-    value = Array(doc.css(SELECTOR))[0]
-    @fetched_data = value&.text
+    @fetched_data = extract_text.presence
 
     if fetched_data.blank?
       Rails.logger.error "#{self.class.name}: no track for selector '#{SELECTOR}' url: #{@url}"
@@ -35,10 +34,18 @@ class RadioboxLastTrack < LastTrackBase
 
     return if response.nil?
 
-    CurrentTrack.new artist: response.artist, title: response.title, response: value.to_html, played_at: Time.current, source: :radiobox
+    CurrentTrack.new artist: response.artist, title: response.title, played_at: Time.current, source: :radiobox
   end
 
   private
+
+  def extract_text
+     value = Array(doc.css(SELECTOR))[0]&.text
+     if value.blank?
+       value = Array(doc.css(SELECTOR2))[0]&.text
+     end
+     value
+  end
 
   def fetch_html_new
     parsed_url = URI.parse(@url)
