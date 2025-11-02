@@ -9,12 +9,11 @@ class SpotifyAddToPlaylist
 
   def call
     if auth
-     playlist = RSpotify::Playlist.find('stereosonic', '4hCzjwNBI1KkP8Mz6UucTi')
-     playlist.add_tracks!([spotify_track]) if playlist && @spotify_track
+     playlist = RSpotify::Playlist.find("stereosonic", "4hCzjwNBI1KkP8Mz6UucTi")
+     playlist.add_tracks!([ spotify_track ]) if playlist && @spotify_track
     else
       Rails.logger.error "Spotify authentication failed"
       nil
     end
   end
-
 end
