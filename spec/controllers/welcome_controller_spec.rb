@@ -8,7 +8,7 @@ RSpec.describe WelcomeController, type: :controller do
     end
 
     it "assigns @stations" do
-      station = create(:station)
+      create(:station)
       get :index
       expect(assigns(:stations)).to be_present
       expect(assigns(:stations).first).to be_a(StationPresenter)

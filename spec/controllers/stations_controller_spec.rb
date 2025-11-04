@@ -54,9 +54,9 @@ RSpec.describe StationsController, type: :controller do
   describe "POST #create" do
     context "with valid params" do
       it "creates a new Station" do
-        expect {
+        expect do
           post :create, params: { station: valid_attributes }
-        }.to change(Station, :count).by(1)
+        end.to change(Station, :count).by(1)
       end
 
       it "redirects to the stations index" do
@@ -77,9 +77,9 @@ RSpec.describe StationsController, type: :controller do
       end
 
       it "does not create a station" do
-        expect {
+        expect do
           post :create, params: { station: invalid_attributes }
-        }.not_to change(Station, :count)
+        end.not_to change(Station, :count)
       end
     end
   end
@@ -116,9 +116,9 @@ RSpec.describe StationsController, type: :controller do
   describe "DELETE #destroy" do
     it "destroys the requested station" do
       station
-      expect {
+      expect do
         delete :destroy, params: { id: station.to_param }
-      }.to change(Station, :count).by(-1)
+      end.to change(Station, :count).by(-1)
     end
 
     it "redirects to the stations list" do

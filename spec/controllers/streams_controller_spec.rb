@@ -17,9 +17,9 @@ RSpec.describe StreamsController, type: :controller do
       it "handles streaming errors gracefully" do
         allow(Net::HTTP).to receive(:get_response).and_raise(StandardError.new("Network error"))
 
-        expect {
+        expect do
           get :show, params: { station_id: station.id }, format: :mp3
-        }.not_to raise_error
+        end.not_to raise_error
       end
     end
 

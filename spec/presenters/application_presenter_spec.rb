@@ -27,7 +27,7 @@ RSpec.describe ApplicationPresenter do
 
     it "wraps each element in the collection" do
       wrapped = described_class.wrap(collection)
-      expect(wrapped).to all(be_a(ApplicationPresenter))
+      expect(wrapped).to all(be_a(described_class))
       expect(wrapped.size).to eq(2)
     end
 

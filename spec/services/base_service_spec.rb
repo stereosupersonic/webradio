@@ -45,7 +45,7 @@ RSpec.describe BaseService do
 
   describe "#call" do
     it "has empty default implementation" do
-      service = BaseService.new
+      service = described_class.new
       expect(service.call).to be_nil
     end
   end
