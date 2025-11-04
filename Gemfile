@@ -85,6 +85,7 @@ group :test do
   gem "webdrivers"
   gem "shoulda-matchers", "~> 6.0"
   gem "simplecov", "~> 0.22.0", require: false
+  gem "rails-controller-testing", "~> 1.0"
 end
 
 gem "lograge", "~> 0.14.0"
