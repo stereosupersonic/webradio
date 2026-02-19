@@ -81,6 +81,7 @@ RSpec.describe SpotifyTrack do
 
         it "logs authentication error" do
           expect(Rails.logger).to receive(:error).with("Spotify authentication error: Auth failed")
+          expect(Rails.logger).to receive(:error).with("Spotify authentication failed")
           service.call
         end
       end

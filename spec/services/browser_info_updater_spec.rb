@@ -34,14 +34,19 @@ RSpec.describe BrowserInfoUpdater do
         allow(mock_response).to receive(:is_a?).with(Net::HTTPSuccess).and_return(true)
       end
 
-      it "updates station with API data" do
+      it "updates station url" do
         service.call
-        station.reload
 
         expect(station.url).to eq("http://updated.com")
-        expect(station.name).to eq("Updated Name")
-        expect(station.logo_url).to eq("http://updated.com/favicon.ico")
-        expect(station.homepage).to eq("http://updated.com")
+      end
+
+      it "updates blank attributes with API data" do
+        blank_station = create(:station, browser_info_byuuid: "test-uuid-123", logo_url: nil, homepage: nil)
+        blank_service = described_class.new(station: blank_station)
+        blank_service.call
+
+        expect(blank_station.logo_url).to eq("http://updated.com/favicon.ico")
+        expect(blank_station.homepage).to eq("http://updated.com")
       end
 
       it "does not overwrite existing name if present" do
