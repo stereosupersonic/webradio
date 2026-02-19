@@ -18,7 +18,7 @@ RSpec.describe WelcomeController, type: :controller do
       station1 = create(:station, position: 2)
       station2 = create(:station, position: 1)
       get :index
-      expect(assigns(:stations).map(&:o)).to eq([station2, station1])
+      expect(assigns(:stations).map(&:o)).to eq([ station2, station1 ])
     end
   end
 end

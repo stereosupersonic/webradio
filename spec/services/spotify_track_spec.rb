@@ -52,7 +52,7 @@ RSpec.describe SpotifyTrack do
 
         before do
           allow(RSpotify).to receive(:authenticate).and_return(true)
-          allow(RSpotify::Track).to receive(:search).with("#{artist} - #{title}").and_return([mock_track])
+          allow(RSpotify::Track).to receive(:search).with("#{artist} - #{title}").and_return([ mock_track ])
         end
 
         it "returns the first search result" do

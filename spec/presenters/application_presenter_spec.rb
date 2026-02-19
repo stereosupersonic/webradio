@@ -23,7 +23,7 @@ RSpec.describe ApplicationPresenter do
   end
 
   describe ".wrap" do
-    let(:collection) { [test_object, test_object] }
+    let(:collection) { [ test_object, test_object ] }
 
     it "wraps each element in the collection" do
       wrapped = described_class.wrap(collection)

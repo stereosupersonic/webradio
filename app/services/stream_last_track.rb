@@ -46,7 +46,7 @@ class StreamLastTrack < LastTrackBase
   private
 
   def normalize_steam_text(text)
-    text.force_encoding("UTF-8").scrub.strip.to_s.gsub(". - ","").strip.sub(/~.*$/, "").strip
+    text.force_encoding("UTF-8").scrub.strip.to_s.gsub(". - ", "").strip.sub(/~.*$/, "").strip
   end
 
   def read_stream
