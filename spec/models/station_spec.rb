@@ -39,7 +39,7 @@ RSpec.describe Station, type: :model do
     it "creates a station with browser info" do
       byuuid = "some-uuid" + SecureRandom.uuid
       response = double("response", is_a?: true, body: '[{"url_resolved":"http://example.com","name":"Example","favicon":"http://example.com/favicon.ico","homepage":"http://example.com"}]')
-      expect(Net::HTTP).to receive(:get_response).with(URI.parse("http://91.132.145.114/json/stations/byuuid/#{byuuid}")).and_return(response)
+      expect(Net::HTTP).to receive(:get_response).with(URI.parse("#{BrowserInfoUpdater::BROWSER_INFO_URL}/json/stations/byuuid/#{byuuid}")).and_return(response)
 
       station = Station.create_by_browser_info(byuuid)
       expect(station).to be_persisted
