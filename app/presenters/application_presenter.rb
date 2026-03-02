@@ -1,6 +1,7 @@
 require "delegate"
 
 class ApplicationPresenter < SimpleDelegator
+ include ActionView::Helpers
   alias_method :object, :__getobj__
 
   def self.wrap(collection)
